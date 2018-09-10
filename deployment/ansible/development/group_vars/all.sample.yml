@@ -19,6 +19,7 @@ django:
   volumes:
     - ../submodules/scanwebgis/django_app:/home/web/extra_app
   environment:
+    GEONODE_PREFIX: "r'geonode'"
     SITE_DOMAIN_NAME: 'http://scanwebgis-docker.test'
     GEOCONTEXT_URL: 'http://localhost:65402'
     CONTACT_US_EMAIL: 'dimas@kartoza.com'
@@ -27,7 +28,7 @@ django:
     RABBITMQ_HOST: rabbitmq
     HAYSTACK_HOST: elasticsearch
     PYTHONPATH: /usr/src/app:/home/web/django_project:/home/web/extra_app
-    ROOT_URLCONF: core.urls
+    ROOT_URLCONF: core.root_urls
     DATABASE_NAME: gis
     DATABASE_PASSWORD: docker
     DATABASE_USERNAME: docker

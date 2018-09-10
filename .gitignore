@@ -134,3 +134,4 @@ deployment/logs
 deployment/sites-enabled
 
 deployment/production/docker/scanwebgis/ssh_key
+deployment/production/docker/geonode_generic/ssh_key

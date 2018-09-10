@@ -262,3 +262,9 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 OGC_SERVER['default']['DATASTORE'] = os.environ.get(
         'DEFAULT_BACKEND_DATASTORE', '')
+
+# Set GeoNode prefix url
+
+GEONODE_PREFIX = ast.literal_eval(
+    os.environ.get('GEONODE_PREFIX', "''")
+)

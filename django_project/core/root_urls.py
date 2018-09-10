@@ -1,0 +1,24 @@
+# coding=utf-8
+from django.conf.urls import url, include
+from django.contrib import admin
+from django.urls import LocaleRegexURLResolver
+from django.conf import settings
+
+from core.urls import urlpatterns
+
+# We need to remove i18n if we want to use prefixed url.
+for pattern in urlpatterns:
+    if not isinstance(pattern, LocaleRegexURLResolver):
+        continue
+    if 'admin' in pattern.app_dict:
+        admin_pattern = pattern
+        break
+
+urlpatterns += [
+    url(r'admin/', include(admin.site.urls))
+]
+urlpatterns.remove(admin_pattern)
+
+urlpatterns = [
+    url(settings.GEONODE_PREFIX, include(urlpatterns)),
+]

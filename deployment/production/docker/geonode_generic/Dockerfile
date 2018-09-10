@@ -10,23 +10,21 @@ RUN touch /root/.ssh/known_hosts
 
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-ARG SCANWEBGIS_TAG=master
-
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src
-RUN git clone --branch ${SCANWEBGIS_TAG} --depth 1 git@github.com:kartoza/scanwebgis.git
 
-FROM python:3.7.0-stretch
+# Copy customized geonode settings
+ARG SCANWEBGIS_DOCKER_TAG=master
+RUN git clone --branch ${SCANWEBGIS_DOCKER_TAG} --depth 1 git@github.com:kartoza/scanwebgis-docker.git
+
+FROM geosolutionsit/geonode-generic:1.0
 
 #RUN mkdir -p /home/web/extra_app
 
-COPY --from=intermediate /usr/src/scanwebgis/django_app/ /home/web/extra_app/
-
-WORKDIR /home/web/extra_app
+COPY --from=intermediate /usr/src/scanwebgis-docker/django_project/ /usr/src/scanwebgis-docker/
 
 RUN pip install -r REQUIREMENTS.txt
 
 EXPOSE 8000
 
 CMD ["uwsgi", "--ini", "uwsgi.ini"]
-
