@@ -52,7 +52,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend'
                   '.ElasticsearchSearchEngine',
-        'URL': 'http://%s:9200/' % os.environ['HAYSTACK_HOST'],
+        'URL': 'http://elasticsearch:9200/',
         'INDEX_NAME': 'haystack',
     },
 }
