@@ -1,0 +1,103 @@
+---
+# Set to yes, if you're using pycharm for development
+# Otherwise, set no
+use_pycharm: yes
+# Your linux/mac user that will run ansible
+remote_user: lucernae
+# Your linux/mac group that will run ansible
+remote_group: staff
+# Your project location (this repo)
+project_path: "/Users/lucernae/Documents/WorkingDir/Projects/kartoza/scanwebgis-docker"
+# True if it will be running on Travis
+on_travis: False
+# Project name as pycharm namespace
+project_name: scanwebgis-docker
+
+django:
+  # extra django app location from deployment folder
+  app_location: ../django_project
+  volumes:
+    - ../submodules/scanwebgis/django_app:/home/web/extra_app
+  environment:
+    SITE_DOMAIN_NAME: 'http://scanwebgis-docker.test'
+    GEOCONTEXT_URL: 'http://localhost:65402'
+    CONTACT_US_EMAIL: 'dimas@kartoza.com'
+    DEBUG: True
+    DJANGO_SETTINGS_MODULE: core.settings.dev_docker
+    RABBITMQ_HOST: rabbitmq
+    HAYSTACK_HOST: elasticsearch
+    PYTHONPATH: /usr/src/app:/home/web/django_project:/home/web/extra_app
+    ROOT_URLCONF: core.urls
+    DATABASE_NAME: gis
+    DATABASE_PASSWORD: docker
+    DATABASE_USERNAME: docker
+    DATABASE_HOST: db
+    SITEURL: http://scanwebgis-docker.test/
+
+scanwebgis:
+  command: /usr/sbin/sshd -D
+  volumes:
+    - ../submodules/scanwebgis/django_app:/home/web/extra_app
+  environment:
+    PYTHONPATH: /home/web/extra_app
+    ROOT_URLCONF: scanterra.urls
+    DEBUG: True
+    DJANGO_SETTINGS_MODULE: scanterra.settings
+    SITEURL: http://scanwebgis.test/
+    STATIC_ROOT: /home/web/static
+    MEDIA_ROOT: /home/web/media
+    # For KOBO
+    # To Kobocat
+    KOBO_API_URL: http://test.scancollect.scanterra.com
+    KOBO_API_CLIENTID: 'fRIYPYNvSK749xZsCNYeku3rqk9wLhjbx7VyULng'
+    KOBO_API_CLIENTSECRET: '3FHtPS2QCwswN2Lb5guY9MuRZKgwpqUq3G9xpK7rhVstGYRSK2I7w82z1RUH2iDHR218xc13DrmzpvY2JvL1gHmD0aQlGCEVUA7FkTphW5ZouY1HdVHsPYfoqVbGHHWV'
+    KOBO_API_USER: 'kobo_superadmin'
+    KOBO_API_PASSWORD: 'kobo_superpassword'
+
+
+geonode:
+  environment:
+    GEONODE_INSTANCE_NAME: geonode
+    DEFAULT_BACKEND_DATASTORE: datastore
+    GEONODE_DATABASE: gis
+    GEONODE_DATABASE_USER: docker
+    GEONODE_DATABASE_PASSWORD: docker
+    GEONODE_GEODATABASE: geonode_data
+    GEONODE_GEODATABASE_PASSWORD: geonode_data
+    UWSGI_CMD: uwsgi --ini /usr/src/app/uwsgi.ini
+    IS_CELERY: False
+    C_FORCE_ROOT: 1
+    # replaced with defaults in settings
+    GEOSERVER_PUBLIC_LOCATION: scanwebgis-docker.test:63305/geoserver/
+    GEOSERVER_LOCATION: http://geoserver:8080/geoserver/
+    STATIC_ROOT: /home/web/static
+    MEDIA_ROOT: /home/web/media
+    GEOIP_PATH: /home/web/media/geoip.db
+    ALLOWED_HOSTS: ['scanwebgis-docker.test']
+    ADMIN_EMAILS: dimas@kartoza.com
+    GEOSERVER_ADMIN_PASSWORD: admingeoserver
+
+geoserver:
+  environment:
+    GEOSERVER_ADMIN_PASSWORD: admingeoserver
+    SITEURL: http://scanwebgis-docker.test/
+
+interpreters:
+  inasafe_django:
+    name: 'scanwebgis-docker Container'
+    domain_alias: 'scanwebgis-docker.test'
+    ssh_port: 63303
+    pycharm_helpers: /home/web/django_project/.pycharm_helpers
+    ipaddress: scanwebgis-docker.test
+
+docker_port_forward:
+  django:
+    db: 6543
+    elastic_search: 9200
+    http: 63302
+    ssh: 63403
+    geoserver: 63305
+    karma_tests: 63304
+  scanwebgis:
+    ssh: 63404
+    http: 63306
