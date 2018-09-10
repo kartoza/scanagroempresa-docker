@@ -25,14 +25,14 @@ from geonode.urls import urlpatterns as geonode_urlpatterns
 urlpatterns = [
     # url(r'^grappelli/', include('grappelli.urls')),
     # url(r'^accounts/', include('allauth.urls')),
-    url(r'^contact/', include('contactus.urls')),
+    # url(r'^contact/', include('contactus.urls')),
     url(r'^pages/', include('django.contrib.flatpages.urls')),
     # url(r'^', include('scanterra.urls')),
 
     # prometheus monitoring
-    url(r'', include('django_prometheus.urls')),
+    # url(r'', include('django_prometheus.urls')),
 
-    url(r'^api-auth/', include('rest_framework.urls')),
+    # url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^geonode/?$',
         TemplateView.as_view(template_name='site_index.html'),
         name='home'),
