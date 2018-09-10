@@ -31,12 +31,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'guardian.backends.ObjectPermissionBackend',
     # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 # Django grappelli need to be added before django.contrib.admin
 INSTALLED_APPS = (
-    'grappelli',
+    # 'grappelli',
     'colorfield',
 ) + INSTALLED_APPS
 
@@ -46,11 +46,11 @@ GRAPPELLI_ADMIN_TITLE = 'Admin Page'
 INSTALLED_APPS += (
     # AppConfig Hook to fix issue from geonode
     'core.config_hook',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.github',
     'easyaudit',
     'rolepermissions',
     'rest_framework',
@@ -257,8 +257,8 @@ INSTITUTION_ID_DEFAULT = os.environ.get('INSTITUTION_ID_DEFAULT', 'geonode')
 
 ACCOUNT_APPROVAL_REQUIRED = False
 SOCIALACCOUNT_AUTO_SIGNUP = True
-ACCOUNT_ADAPTER = 'bims.adapters.account_adapter.AccountAdapter'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# ACCOUNT_ADAPTER = 'bims.adapters.account_adapter.AccountAdapter'
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 OGC_SERVER['default']['DATASTORE'] = os.environ.get(
         'DEFAULT_BACKEND_DATASTORE', '')
@@ -268,3 +268,8 @@ OGC_SERVER['default']['DATASTORE'] = os.environ.get(
 GEONODE_PREFIX = ast.literal_eval(
     os.environ.get('GEONODE_PREFIX', "''")
 )
+
+MEDIA_URL = '/' + GEONODE_PREFIX + 'uploaded/'
+STATIC_URL = '/' + GEONODE_PREFIX + 'static/'
+
+SCANWEBGIS_URL = os.environ.get('SCANWEBGIS_URL', '')

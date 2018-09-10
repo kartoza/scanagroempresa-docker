@@ -22,9 +22,3 @@ FROM geosolutionsit/geonode-generic:1.0
 #RUN mkdir -p /home/web/extra_app
 
 COPY --from=intermediate /usr/src/scanwebgis-docker/django_project/ /usr/src/scanwebgis-docker/
-
-RUN pip install -r REQUIREMENTS.txt
-
-EXPOSE 8000
-
-CMD ["uwsgi", "--ini", "uwsgi.ini"]

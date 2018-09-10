@@ -23,8 +23,8 @@ from geonode.urls import urlpatterns as geonode_urlpatterns
 # GeoNode has to be in root url conf.
 # It cannot be included in include() function because it contains i18n urls
 urlpatterns = [
-    url(r'^grappelli/', include('grappelli.urls')),
-    url(r'^accounts/', include('allauth.urls')),
+    # url(r'^grappelli/', include('grappelli.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
     url(r'^contact/', include('contactus.urls')),
     url(r'^pages/', include('django.contrib.flatpages.urls')),
     # url(r'^', include('scanterra.urls')),

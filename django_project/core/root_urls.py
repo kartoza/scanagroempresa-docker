@@ -3,6 +3,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.urls import LocaleRegexURLResolver
 from django.conf import settings
+from django.views.generic import RedirectView
 
 from core.urls import urlpatterns
 
@@ -20,5 +21,6 @@ urlpatterns += [
 urlpatterns.remove(admin_pattern)
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url=settings.SCANWEBGIS_URL)),
     url(settings.GEONODE_PREFIX, include(urlpatterns)),
 ]
