@@ -20,11 +20,11 @@ django:
     - ../submodules/scanwebgis/django_app:/home/web/extra_app
   environment:
     GEONODE_PREFIX: "''"
-    SITE_DOMAIN_NAME: 'http://scanwebgis-docker.test'
+    SITE_DOMAIN_NAME: 'http://scanwebgis-docker.test:63302'
     GEOCONTEXT_URL: 'http://localhost:65402'
     CONTACT_US_EMAIL: 'dimas@kartoza.com'
     DEBUG: True
-    DJANGO_SETTINGS_MODULE: core.settings.dev_docker
+    DJANGO_SETTINGS_MODULE: core.settings.overrides
     RABBITMQ_HOST: rabbitmq
     HAYSTACK_HOST: elasticsearch
     PYTHONPATH: /usr/src/app:/home/web/django_project:/home/web/extra_app
@@ -33,7 +33,8 @@ django:
     DATABASE_PASSWORD: docker
     DATABASE_USERNAME: docker
     DATABASE_HOST: db
-    SITEURL: http://scanwebgis-docker.test/
+    SITEURL: http://scanwebgis-docker.test:63302/
+    SCANWEBGIS_URL: http://scanwebgis-docker.test:63306/scanwebgis/
 
 scanwebgis:
   command: /usr/sbin/sshd -D
@@ -45,16 +46,16 @@ scanwebgis:
     URL_PREFIX: 'scanwebgis/'
     DEBUG: True
     DJANGO_SETTINGS_MODULE: scanterra.settings
-    SITEURL: http://scanwebgis.test/
+    SITEURL: http://scanwebgis-docker.test:63306/
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
-    KOBO_API_CLIENTID: 'fRIYPYNvSK749xZsCNYeku3rqk9wLhjbx7VyULng'
-    KOBO_API_CLIENTSECRET: '3FHtPS2QCwswN2Lb5guY9MuRZKgwpqUq3G9xpK7rhVstGYRSK2I7w82z1RUH2iDHR218xc13DrmzpvY2JvL1gHmD0aQlGCEVUA7FkTphW5ZouY1HdVHsPYfoqVbGHHWV'
-    KOBO_API_USER: 'kobo_superadmin'
-    KOBO_API_PASSWORD: 'kobo_superpassword'
+    KOBO_API_CLIENTID: ''
+    KOBO_API_CLIENTSECRET: ''
+    KOBO_API_USER: ''
+    KOBO_API_PASSWORD: ''
 
 
 geonode:
@@ -82,7 +83,7 @@ geonode:
 geoserver:
   environment:
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
-    SITEURL: http://scanwebgis-docker.test/
+    SITEURL: http://scanwebgis-docker.test:63306/
 
 interpreters:
   inasafe_django:
