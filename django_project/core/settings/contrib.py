@@ -35,10 +35,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # Django grappelli need to be added before django.contrib.admin
-INSTALLED_APPS = (
-    # 'grappelli',
-    # 'colorfield',
-) + INSTALLED_APPS
+# INSTALLED_APPS = (
+#     # 'grappelli',
+#     # 'colorfield',
+# ) + INSTALLED_APPS
 
 # Grapelli settings
 GRAPPELLI_ADMIN_TITLE = 'Admin Page'
@@ -112,10 +112,10 @@ STATICFILES_DIRS = [
 
 INSTALLED_APPS = ensure_unique_app_labels(INSTALLED_APPS)
 
-MIDDLEWARE_CLASSES += (
-    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
-)
+# MIDDLEWARE_CLASSES += (
+#     'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
+#     'django_prometheus.middleware.PrometheusBeforeMiddleware',
+# )
 
 # for middleware in MIDDLEWARE_CLASSES:
 #     if middleware not in MIDDLEWARE:
