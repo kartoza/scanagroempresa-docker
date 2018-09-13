@@ -160,6 +160,8 @@ services:
       - RABBIT_PASSWORD=rabbit_test_password
       - USER=rabbit_user
       - RABBITMQ_NODENAME=rabbit
+    volumes:
+      - ./rabbitmq-data:/var/lib/rabbitmq/
     restart: unless-stopped
 
   cache:
@@ -167,6 +169,11 @@ services:
    entrypoint:
     - memcached
     - -m 64
+
+  redis:
+    image: redis:4.0.11
+    volumes:
+      - ./redis-data:/data/
 
   scanwebgis:
     image: kartoza/scanwebgis
@@ -177,5 +184,12 @@ services:
     - ./static:/home/web/static:rw
     - ./media:/home/web/media:rw
     - ./logs:/var/log/
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DEFAULT_DB: 1
+      REDIS_SESSION_DB: 2
+    links:
+      - redis:redis
     restart: unless-stopped
 

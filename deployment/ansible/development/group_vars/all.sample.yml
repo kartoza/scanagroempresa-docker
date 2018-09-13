@@ -41,11 +41,12 @@ scanwebgis:
   volumes:
     - ../submodules/scanwebgis/django_app:/home/web/extra_app
   environment:
+    DJANGO_SECRET_KEY: somerandomstring
     PYTHONPATH: /home/web/extra_app
     ROOT_URLCONF: scanterra.urls
     URL_PREFIX: 'scanwebgis/'
     DEBUG: True
-    DJANGO_SETTINGS_MODULE: scanterra.settings
+    DJANGO_SETTINGS_MODULE: scanterra.settings_prod
     SITEURL: http://scanwebgis-docker.test:63306/
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media
@@ -56,6 +57,11 @@ scanwebgis:
     KOBO_API_CLIENTSECRET: ''
     KOBO_API_USER: ''
     KOBO_API_PASSWORD: ''
+    # Redis Settings
+    REDIS_HOST: redis
+    REDIS_PORT: 6379
+    REDIS_DEFAULT_DB: 1
+    REDIS_SESSION_DB: 2
 
 
 geonode:

@@ -41,13 +41,15 @@ deploy: run
 	@echo "You can access it on http://localhost:63200"
 	@echo "------------------------------------------------------------------"
 
+submodule-init:
+	@git submodule init
+	@git submodule update
+
 build:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Building in production mode"
 	@echo "------------------------------------------------------------------"
-	@git submodule init
-	@git submodule update
 	@docker-compose ${ARGS} build base_uwsgi
 	@docker-compose ${ARGS} build uwsgi
 	@docker-compose ${ARGS} build scanwebgis
@@ -181,6 +183,9 @@ logs:
 
 logs-scanwebgis:
 	@docker-compose logs -f --tail=30 scanwebgis
+
+logs-redis:
+	@docker-compose logs -f --tail=30 redis
 
 logs-web:
 	@docker-compose logs -f --tail=30 web
