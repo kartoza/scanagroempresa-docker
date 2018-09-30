@@ -26,9 +26,13 @@ COPY --from=intermediate /usr/src/scanwebgis/django_app/ /home/web/extra_app/
 
 ADD entrypoint.sh /entrypoint.sh
 
+ADD wait-for-databases.sh /wait-for-databases.sh
+
 WORKDIR /home/web/extra_app
 
 RUN pip install -r REQUIREMENTS.txt
+
+RUN apt update; apt install -y postgresql-client
 
 EXPOSE 8000
 

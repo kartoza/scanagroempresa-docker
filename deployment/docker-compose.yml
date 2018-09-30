@@ -184,11 +184,6 @@ services:
     - ./static:/home/web/static:rw
     - ./media:/home/web/media:rw
     - ./logs:/var/log/
-    environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_DEFAULT_DB: 1
-      REDIS_SESSION_DB: 2
     links:
       - redis:redis
     restart: unless-stopped

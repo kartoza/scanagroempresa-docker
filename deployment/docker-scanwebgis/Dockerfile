@@ -18,10 +18,18 @@ ADD REQUIREMENTS.txt REQUIREMENTS.txt
 
 RUN pip install -r REQUIREMENTS.txt
 
+RUN apt update; apt install -y postgresql-client
+
+ADD entrypoint.sh /entrypoint.sh
+
+ADD wait-for-databases.sh /wait-for-databases.sh
+
 WORKDIR /home/web/extra_app
 
 EXPOSE 22
 EXPOSE 8000
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/usr/sbin/sshd", "-D"]
 

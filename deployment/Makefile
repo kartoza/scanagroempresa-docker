@@ -344,6 +344,9 @@ gruntserver:
 	@echo "------------------------------------------------------------------"
 	@docker-compose run --rm uwsgi python manage.py gruntserver
 
+generate-django-secret:
+	@docker-compose run --rm uwsgi python -c 'from django.utils.crypto import get_random_string; print(get_random_string(50, "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"))'
+
 generate-boundaries:
 	@echo
 	@echo "------------------------------------------------------------------"

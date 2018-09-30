@@ -24,6 +24,8 @@ django:
     GEOCONTEXT_URL: 'http://localhost:65402'
     CONTACT_US_EMAIL: 'dimas@kartoza.com'
     DEBUG: True
+    # Put random string on secret key
+    SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     DJANGO_SETTINGS_MODULE: core.settings.overrides
     RABBITMQ_HOST: rabbitmq
     HAYSTACK_HOST: elasticsearch
@@ -41,7 +43,8 @@ scanwebgis:
   volumes:
     - ../submodules/scanwebgis/django_app:/home/web/extra_app
   environment:
-    DJANGO_SECRET_KEY: somerandomstring
+    # Put random string on secret key
+    DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     PYTHONPATH: /home/web/extra_app
     ROOT_URLCONF: scanterra.urls
     URL_PREFIX: 'scanwebgis/'
@@ -50,6 +53,15 @@ scanwebgis:
     SITEURL: http://scanwebgis-docker.test:63306/
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media
+    # For database
+    PGDATABASE: scanweb
+    PGUSER: docker
+    PGPASSWORD: docker
+    PGHOST: db
+    PGPORT: 5432
+    # For GeoNode
+    GEONODE_SERVER_HOST: http://scanwebgis-docker.test:63302
+    GEOSERVER_SERVER_HOST: http://scanwebgis-docker.test:63305
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
@@ -77,7 +89,8 @@ geonode:
     IS_CELERY: False
     C_FORCE_ROOT: 1
     # replaced with defaults in settings
-      GEOSERVER_PUBLIC_LOCATION: http://scanwebgis-docker.test:63305/geoserver/
+    GEOSERVER_BASE_URL: http://scanwebgis-docker.test:63305/geoserver/
+    GEOSERVER_PUBLIC_LOCATION: http://scanwebgis-docker.test:63305/geoserver/
     GEOSERVER_LOCATION: http://geoserver:8080/geoserver/
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media

@@ -3,3 +3,5 @@ requests
 requests_oauthlib
 uwsgi
 django-redis
+retry
+psycopg2-binary==2.7.5
