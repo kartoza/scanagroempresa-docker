@@ -8,5 +8,13 @@ python manage.py collectstatic --noinput
 # Run migrate
 python manage.py migrate
 
+# Create uwsgi.ini
+
+echo "Check uwsgi ini file"
+if [ ! -f uwsgi.ini ]; then
+	echo "Generate uwsgi.ini"
+	envsubst < "uwsgi.ini.tpl" > "uwsgi.ini"
+fi
+
 echo "Executing command: $@"
 exec "$@"

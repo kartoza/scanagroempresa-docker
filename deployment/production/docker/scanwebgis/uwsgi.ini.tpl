@@ -4,7 +4,7 @@ http = :8000
 http-keepalive = true
 module = scanterra.wsgi:application
 offload-threads = 1
-static-map = /scanwebgis/static=./static_prod
+static-map = /${URL_PREFIX}static=./static_prod
 
 ; set cheaper algorithm to use, if not set default will be used
 cheaper-algo = spare

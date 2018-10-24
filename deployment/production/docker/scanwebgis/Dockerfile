@@ -16,7 +16,7 @@ RUN mkdir -p /usr/src/
 WORKDIR /usr/src
 RUN git clone --branch ${SCANWEBGIS_TAG} --depth 1 git@github.com:kartoza/scanwebgis.git
 
-ADD uwsgi.ini /usr/src/scanwebgis/django_app/uwsgi.ini
+ADD uwsgi.ini.tpl /usr/src/scanwebgis/django_app/uwsgi.ini.tpl
 
 FROM python:3.7.0-stretch
 
@@ -32,7 +32,7 @@ WORKDIR /home/web/extra_app
 
 RUN pip install -r REQUIREMENTS.txt
 
-RUN apt update; apt install -y postgresql-client
+RUN apt update; apt install -y postgresql-client gettext
 
 EXPOSE 8000
 
