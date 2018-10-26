@@ -14,15 +14,17 @@ ARG SCANWEBGIS_TAG=master
 
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src
-RUN git clone --branch ${SCANWEBGIS_TAG} --depth 1 git@github.com:kartoza/scanwebgis.git
+RUN git clone --branch ${SCANWEBGIS_TAG} --depth 1 git@github.com:kartoza/scanagroempresa.git
 
-ADD uwsgi.ini.tpl /usr/src/scanwebgis/django_app/uwsgi.ini.tpl
+ADD uwsgi.ini.tpl /usr/src/scanagroempresa/django_app/uwsgi.ini.tpl
+
+RUN rm -f /usr/src/scanagroempresa/django_app/uwsgi.ini
 
 FROM python:3.7.0-stretch
 
 #RUN mkdir -p /home/web/extra_app
 
-COPY --from=intermediate /usr/src/scanwebgis/django_app/ /home/web/extra_app/
+COPY --from=intermediate /usr/src/scanagroempresa/django_app/ /home/web/extra_app/
 
 ADD entrypoint.sh /entrypoint.sh
 
