@@ -150,7 +150,7 @@ services:
     hostname: nginx
     links:
       - uwsgi:uwsgi
-      - scanwebgis:scanwebgis
+      - scanagroempresa:scanagroempresa
     restart: unless-stopped
 
   rabbitmq:
@@ -175,10 +175,10 @@ services:
     volumes:
       - ./redis-data:/data/
 
-  scanwebgis:
-    image: kartoza/scanwebgis
+  scanagroempresa:
+    image: kartoza/scanagroempresa:dev
     build:
-      context: docker-scanwebgis
+      context: docker-scanagroempresa
     working_dir: /home/web/extra_app
     volumes:
     - ./static:/home/web/static:rw

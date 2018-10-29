@@ -34,14 +34,14 @@
     mode: "u=rw,g=rw,o=r"
   with_items:
     - { src: django-geonode.xml.j2 }
-    - { src: scanwebgis.xml.j2 }
+    - { src: scanagroempresa.xml.j2 }
 - name: inject python interpreter definitions
   command: python inject_python_interpreter.py "{{ pycharm_settings_path }}/options/jdk.table.xml" "{{ project_path }}/deployment/ansible/tmp/{{ item.src }}"
   args:
     chdir: "{{ project_path }}/deployment/ansible/development/roles/pycharm/files/"
   with_items:
     - { src: django-geonode.xml.j2 }
-    - { src: scanwebgis.xml.j2 }
+    - { src: scanagroempresa.xml.j2 }
 
 - name: customize run/debug configurations
   template:

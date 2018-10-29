@@ -272,4 +272,4 @@ GEONODE_PREFIX = ast.literal_eval(
 MEDIA_URL = '/' + GEONODE_PREFIX + 'uploaded/'
 STATIC_URL = '/' + GEONODE_PREFIX + 'static/'
 
-SCANWEBGIS_URL = os.environ.get('SCANWEBGIS_URL', '')
+SCANAGROEMPRESA_URL = os.environ.get('SCANAGROEMPRESA_URL', '')

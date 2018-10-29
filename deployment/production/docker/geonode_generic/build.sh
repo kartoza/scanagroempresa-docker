@@ -5,7 +5,7 @@ if [ -z "$REPO_NAME" ]; then
 fi
 
 if [ -z "$IMAGE_NAME" ]; then
-	IMAGE_NAME=scanwebgis_geonode_generic
+	IMAGE_NAME=scanagroempresa_geonode_generic
 fi
 
 if [ -z "$TAG_NAME" ]; then
@@ -18,16 +18,22 @@ fi
 
 # Build Args Environment
 
-if [ -z "$SCANWEBGIS_DOCKER_TAG" ]; then
-	SCANWEBGIS_DOCKER_TAG=master
+if [ -z "$SCANAGROEMPRESA_DOCKER_TAG" ]; then
+	SCANAGROEMPRESA_DOCKER_TAG=master
 fi
 
-echo "SCANWEBGIS_DOCKER_TAG=${SCANWEBGIS_DOCKER_TAG}"
+if [ -z "$GEONODE_IMAGE" ]; then
+	GEONODE_IMAGE=geosolutionsit/geonode-generic:1.0
+fi
+
+echo "SCANAGROEMPRESA_DOCKER_TAG=${SCANAGROEMPRESA_DOCKER_TAG}"
+echo "GEONODE_IMAGE_TAG=${GEONODE_IMAGE}
 
 echo "Build: $REPO_NAME/$IMAGE_NAME:$TAG_NAME"
 
 docker build -t ${REPO_NAME}/${IMAGE_NAME} \
-	--build-arg SCANWEBGIS_DOCKER_TAG=${SCANWEBGIS_DOCKER_TAG} \
+	--build-arg SCANAGROEMPRESA_DOCKER_TAG=${SCANAGROEMPRESA_DOCKER_TAG} \
+	--build-arg GEONODE_IMAGE=${GEONODE_IMAGE} \
 	${BUILD_ARGS} .
 docker tag ${REPO_NAME}/${IMAGE_NAME}:latest ${REPO_NAME}/${IMAGE_NAME}:${TAG_NAME}
 docker push ${REPO_NAME}/${IMAGE_NAME}:${TAG_NAME}

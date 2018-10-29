@@ -1,4 +1,4 @@
-export COMPOSE_PROJECT_NAME=scanwebgis
+export COMPOSE_PROJECT_NAME=scanagroempresa
 export COMPOSE_FILE=docker-compose.yml:docker-compose.override.yml
 export ANSIBLE_PROJECT_SETUP_DIR=ansible
 
@@ -52,7 +52,7 @@ build:
 	@echo "------------------------------------------------------------------"
 	@docker-compose ${ARGS} build base_uwsgi
 	@docker-compose ${ARGS} build uwsgi
-	@docker-compose ${ARGS} build scanwebgis
+	@docker-compose ${ARGS} build scanagroempresa
 
 web:
 	@echo
@@ -107,8 +107,8 @@ migrate:
 	@echo "------------------------------------------------------------------"
 	@docker-compose exec uwsgi python manage.py migrate
 
-migrate-scanwebgis:
-	@docker-compose exec scanwebgis python manage.py migrate
+migrate-scanagroempresa:
+	@docker-compose exec scanagroempresa python manage.py migrate
 
 update-migrations:
 	@echo
@@ -128,8 +128,8 @@ collectstatic:
 	# no -it flag so we can run over remote shell
 	@docker-compose ${ARGS} exec uwsgi python manage.py collectstatic --noinput ${CMD_ARGS} -i geoexplorer
 
-collectstatic-scanwebgis:
-	@docker-compose exec scanwebgis python manage.py collectstatic
+collectstatic-scanagroempresa:
+	@docker-compose exec scanagroempresa python manage.py collectstatic
 
 reload:
 	@echo
@@ -181,8 +181,8 @@ logs:
 	@echo "------------------------------------------------------------------"
 	@docker-compose logs -f --tail=30 uwsgi
 
-logs-scanwebgis:
-	@docker-compose logs -f --tail=30 scanwebgis
+logs-scanagroempresa:
+	@docker-compose logs -f --tail=30 scanagroempresa
 
 logs-redis:
 	@docker-compose logs -f --tail=30 redis
@@ -212,8 +212,8 @@ shell:
 	@docker-compose exec uwsgi /bin/bash
 
 
-shell-scanwebgis:
-	@docker-compose exec scanwebgis /bin/bash
+shell-scanagroempresa:
+	@docker-compose exec scanagroempresa /bin/bash
 
 
 superuser:

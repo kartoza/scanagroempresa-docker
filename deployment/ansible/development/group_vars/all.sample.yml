@@ -7,20 +7,20 @@ remote_user: lucernae
 # Your linux/mac group that will run ansible
 remote_group: staff
 # Your project location (this repo)
-project_path: "/Users/lucernae/Documents/WorkingDir/Projects/kartoza/scanwebgis-docker"
+project_path: "/Users/lucernae/Documents/WorkingDir/Projects/kartoza/scanagroempresa-docker"
 # True if it will be running on Travis
 on_travis: False
 # Project name as pycharm namespace
-project_name: scanwebgis-docker
+project_name: scanagroempresa-docker
 
 django:
   # extra django app location from deployment folder
   app_location: ../django_project
   volumes:
-    - ../submodules/scanwebgis/django_app:/home/web/extra_app
+    - ../submodules/scanagroempresa/django_app:/home/web/extra_app
   environment:
     GEONODE_PREFIX: "''"
-    SITE_DOMAIN_NAME: 'http://scanwebgis-docker.test:63302'
+    SITE_DOMAIN_NAME: 'http://scanagroempresa-docker.test:63302'
     GEOCONTEXT_URL: 'http://localhost:65402'
     CONTACT_US_EMAIL: 'dimas@kartoza.com'
     DEBUG: True
@@ -35,22 +35,24 @@ django:
     DATABASE_PASSWORD: docker
     DATABASE_USERNAME: docker
     DATABASE_HOST: db
-    SITEURL: http://scanwebgis-docker.test:63302/
-    SCANWEBGIS_URL: http://scanwebgis-docker.test:63306/scanwebgis/
+    # Do not end with slash /
+    SITEURL: http://scanagroempresa-docker.test:63302
+    SCANAGROEMPRESA_URL: http://scanagroempresa-docker.test:63306/scanagroempresa/
 
-scanwebgis:
+scanagroempresa:
   command: /usr/sbin/sshd -D
   volumes:
-    - ../submodules/scanwebgis/django_app:/home/web/extra_app
+    - ../submodules/scanagroempresa/django_app:/home/web/extra_app
   environment:
     # Put random string on secret key
     DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     PYTHONPATH: /home/web/extra_app
     ROOT_URLCONF: scanterra.urls
-    URL_PREFIX: 'scanwebgis/'
+    URL_PREFIX: 'scanagroempresa/'
     DEBUG: True
     DJANGO_SETTINGS_MODULE: scanterra.settings_prod
-    SITEURL: http://scanwebgis-docker.test:63306/
+    # Do not end with slash /
+    SITEURL: http://scanagroempresa-docker.test:63306
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media
     # For database
@@ -59,9 +61,9 @@ scanwebgis:
     PGPASSWORD: docker
     PGHOST: db
     PGPORT: 5432
-    # For GeoNode
-    GEONODE_SERVER_HOST: http://scanwebgis-docker.test:63302
-    GEOSERVER_SERVER_HOST: http://scanwebgis-docker.test:63305
+    # For GeoNode (should not end with slash /)
+    GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
+    GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
@@ -88,29 +90,29 @@ geonode:
     UWSGI_CMD: uwsgi --ini /usr/src/app/uwsgi.ini
     IS_CELERY: False
     C_FORCE_ROOT: 1
-    # replaced with defaults in settings
-    GEOSERVER_BASE_URL: http://scanwebgis-docker.test:63305/geoserver/
-    GEOSERVER_PUBLIC_LOCATION: http://scanwebgis-docker.test:63305/geoserver/
+    # replaced with defaults in settings (ends with slash)
+    GEOSERVER_BASE_URL: http://scanagroempresa-docker.test:63305/geoserver/
+    GEOSERVER_PUBLIC_LOCATION: http://scanagroempresa-docker.test:63305/geoserver/
     GEOSERVER_LOCATION: http://geoserver:8080/geoserver/
     STATIC_ROOT: /home/web/static
     MEDIA_ROOT: /home/web/media
     GEOIP_PATH: /home/web/media/geoip.db
-    ALLOWED_HOSTS: ['scanwebgis-docker.test']
+    ALLOWED_HOSTS: ['scanagroempresa-docker.test']
     ADMIN_EMAILS: dimas@kartoza.com
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
 
 geoserver:
   environment:
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
-    SITEURL: http://scanwebgis-docker.test:63306/
+    SITEURL: http://scanagroempresa-docker.test:63306/
 
 interpreters:
   inasafe_django:
-    name: 'scanwebgis-docker Container'
-    domain_alias: 'scanwebgis-docker.test'
+    name: 'scanagroempresa-docker Container'
+    domain_alias: 'scanagroempresa-docker.test'
     ssh_port: 63303
     pycharm_helpers: /home/web/django_project/.pycharm_helpers
-    ipaddress: scanwebgis-docker.test
+    ipaddress: scanagroempresa-docker.test
 
 docker_port_forward:
   django:
@@ -120,6 +122,6 @@ docker_port_forward:
     ssh: 63403
     geoserver: 63305
     karma_tests: 63304
-  scanwebgis:
+  scanagroempresa:
     ssh: 63404
     http: 63306

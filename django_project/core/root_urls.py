@@ -21,7 +21,7 @@ urlpatterns += [
 urlpatterns.remove(admin_pattern)
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url=settings.SCANWEBGIS_URL)),
+    url(r'^$', RedirectView.as_view(url=settings.SCANAGROEMPRESA_URL)),
     url(r'^geonode/?$',
         TemplateView.as_view(template_name='site_index.html'),
         name='home'),
