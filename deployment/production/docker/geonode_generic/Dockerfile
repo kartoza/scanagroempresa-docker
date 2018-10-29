@@ -17,9 +17,6 @@ WORKDIR /usr/src
 ARG SCANAGROEMPRESA_DOCKER_TAG=master
 RUN git clone --branch ${SCANAGROEMPRESA_DOCKER_TAG} --depth 1 git@github.com:kartoza/scanagroempresa-docker.git
 
-ARG GEONODE_IMAGE=geosolutionsit/geonode-generic:1.0
-FROM ${GEONODE_IMAGE}
-
-#RUN mkdir -p /home/web/extra_app
+FROM geosolutionsit/geonode-generic:1.0
 
 COPY --from=intermediate /usr/src/scanagroempresa-docker/django_project/ /usr/src/scanagroempresa-docker/
