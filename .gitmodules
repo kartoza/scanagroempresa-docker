@@ -1,3 +1,3 @@
-[submodule "submodules/scanwebgis"]
-	path = submodules/scanwebgis
-	url = https://github.com/kartoza/scanwebgis.git
+[submodule "submodules/scanagroempresa"]
+	path = submodules/scanagroempresa
+	url = git@github.com:kartoza/scanagroempresa.git

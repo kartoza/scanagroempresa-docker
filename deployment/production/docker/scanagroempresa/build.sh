@@ -5,7 +5,7 @@ if [ -z "$REPO_NAME" ]; then
 fi
 
 if [ -z "$IMAGE_NAME" ]; then
-	IMAGE_NAME=scanwebgis
+	IMAGE_NAME=scanagroempresa
 fi
 
 if [ -z "$TAG_NAME" ]; then

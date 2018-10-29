@@ -274,14 +274,14 @@
       <option name="customRunCommand" value="" />
       <method />
     </configuration>
-    <configuration default="false" name="{{ project_name }}.scanwebgis" type="Python.DjangoServer" factoryName="Django server">
+    <configuration default="false" name="{{ project_name }}.scanagroempresa" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
-          {% include 'scanwebgis-environment.xml.j2' %}
+          {% include 'scanagroempresa-environment.xml.j2' %}
       </envs>
-      <option name="SDK_HOME" value="ssh://root@localhost:{{ docker_port_forward.scanwebgis.ssh }}/usr/local/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/submodules/scanwebgis/django_app" />
+      <option name="SDK_HOME" value="ssh://root@localhost:{{ docker_port_forward.scanagroempresa.ssh }}/usr/local/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/submodules/scanagroempresa/django_app" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="false" />
@@ -299,6 +299,6 @@
     </configuration>
     <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Django server.{{ project_name }}" />
-      <item index="1" class="java.lang.String" itemvalue="Django server.{{ project_name }}.scanwebgis" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.{{ project_name }}.scanagroempresa" />
     </list>
   </component>

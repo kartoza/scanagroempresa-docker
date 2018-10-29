@@ -4,6 +4,8 @@
 import os
 
 # Absolute filesystem path to the Django project directory:
+import urlparse
+
 DJANGO_ROOT = os.path.dirname(
     os.path.dirname(
         os.path.dirname(os.path.abspath(__file__))
@@ -43,6 +45,43 @@ def ensure_unique_app_labels(installed_apps):
             continue
         retval += (val, )
     return retval
+
+
+def validate_url(url, end_slash=False):
+    """Perform simple validation replace of provided URL.
+
+    :param url: input url
+    :type url: basestring
+
+    :param end_slash: Set to True to end the URL with slash /
+    :type end_slash: bool
+
+    :return: the URL fix
+    :rtype: basestring
+    """
+    # URL should not have double // after relative path
+
+    url_splitted = urlparse.urlsplit(url)
+
+    new_path = url_splitted.path.replace('//', '/')
+    new_parse_result = (
+        url_splitted.scheme,
+        url_splitted.netloc,
+        new_path,
+        url_splitted.query,
+        url_splitted.fragment
+    )
+
+    url = urlparse.urlunsplit(new_parse_result)
+
+    # URL should not end with slash
+    if url.endswith('/') and not end_slash:
+        url = url[:-1]
+
+    if not url.endswith('/') and end_slash:
+        url = url + '/'
+
+    return url
 
 
 # Import the secret key

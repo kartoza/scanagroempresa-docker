@@ -91,11 +91,11 @@ services:
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
 
-  scanwebgis:
+  scanagroempresa:
 
-    {% if scanwebgis.command %}
+    {% if scanagroempresa.command %}
 
-    command: {{ scanwebgis.command }}
+    command: {{ scanagroempresa.command }}
 
     {% endif %}
 
@@ -108,19 +108,19 @@ services:
 
       {% endfor %}
 
-      - ../.scanwebgis_pycharm_helpers:/root/.pycharm_helpers
+      - ../.scanagroempresa_pycharm_helpers:/root/.pycharm_helpers
 
     environment:
 
-      {% for key, value in scanwebgis.environment.iteritems() %}
+      {% for key, value in scanagroempresa.environment.iteritems() %}
 
       - {{ key }}={{ value }}
 
       {% endfor %}
 
     ports:
-      - "{{ docker_port_forward.scanwebgis.ssh }}:22"
-      - "{{ docker_port_forward.scanwebgis.http }}:8000"
+      - "{{ docker_port_forward.scanagroempresa.ssh }}:22"
+      - "{{ docker_port_forward.scanagroempresa.http }}:8000"
 
 
 
