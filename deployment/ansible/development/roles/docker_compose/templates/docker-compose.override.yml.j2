@@ -102,11 +102,17 @@ services:
     volumes:
       - {{ django.app_location }}:/home/web/django_project
 
-      {% for value in django.volumes %}
+      {% for value in scanagroempresa.volumes %}
 
       - {{ value }}
 
       {% endfor %}
+
+      {% if scanagroempresa.environment.USE_THEME_APP is defined and scanagroempresa.environment.USE_THEME_APP %}
+
+      - '../submodules/scanagroempresa_custom_theme:{{ scanagroempresa.environment.THEME_APP_PATH }}'
+
+      {% endif %}
 
       - ../.scanagroempresa_pycharm_helpers:/root/.pycharm_helpers
 

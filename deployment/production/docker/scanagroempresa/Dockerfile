@@ -10,11 +10,11 @@ RUN touch /root/.ssh/known_hosts
 
 RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-ARG SCANWEBGIS_TAG=master
+ARG SCANAGROEMPRESA_TAG=master
 
 RUN mkdir -p /usr/src/
 WORKDIR /usr/src
-RUN git clone --branch ${SCANWEBGIS_TAG} --depth 1 git@github.com:kartoza/scanagroempresa.git
+RUN git clone --branch ${SCANAGROEMPRESA_TAG} --depth 1 git@github.com:kartoza/scanagroempresa.git
 
 ADD uwsgi.ini.tpl /usr/src/scanagroempresa/django_app/uwsgi.ini.tpl
 
@@ -29,6 +29,8 @@ COPY --from=intermediate /usr/src/scanagroempresa/django_app/ /home/web/extra_ap
 ADD entrypoint.sh /entrypoint.sh
 
 ADD wait-for-databases.sh /wait-for-databases.sh
+
+ADD wait-for-kobo-cache-databases.sh /wait-for-kobo-cache-databases.sh
 
 WORKDIR /home/web/extra_app
 

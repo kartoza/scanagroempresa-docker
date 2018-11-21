@@ -61,9 +61,19 @@ scanagroempresa:
     PGPASSWORD: docker
     PGHOST: db
     PGPORT: 5432
+    DATA_PGDATABASE: kobo_form_data
+    DATA_PGUSER: docker
+    DATA_PGPASSWORD: docker
+    DATA_PGHOST: db
+    DATA_PGPORT: 5432
     # For GeoNode (should not end with slash /)
     GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
     GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305
+    GEONODE_PGDATABASE: gis
+    GEONODE_PGUSER: docker
+    GEONODE_PGPASSWORD: docker
+    GEONODE_PGHOST: db
+    GEONODE_PGPORT: 5432
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
@@ -71,11 +81,23 @@ scanagroempresa:
     KOBO_API_CLIENTSECRET: ''
     KOBO_API_USER: ''
     KOBO_API_PASSWORD: ''
+    # These settings after this is for low level database access
+    # Since kobotoolbox stack is not managed by this orchestration, fill in
+    # the correct credentials and database details that you are going to use.
+    KOBO_PGDATABASE: kobotoolbox
+    KOBO_PGUSER: docker
+    KOBO_PGASSWORD: docker
+    KOBO_PGHOST: db
+    KOBO_PGPORT: 5432
     # Redis Settings
     REDIS_HOST: redis
     REDIS_PORT: 6379
     REDIS_DEFAULT_DB: 1
     REDIS_SESSION_DB: 2
+    # Skin App Settings
+    USE_THEME_APP: False
+    THEME_APP_PATH: /home/web/scanagroempresa_custom_theme
+    THEME_APP_NAME: scanagroempresa_custom_theme
 
 
 geonode:
