@@ -43,6 +43,7 @@ scanagroempresa:
   command: /usr/sbin/sshd -D
   volumes:
     - ../submodules/scanagroempresa/django_app:/home/web/extra_app
+    - ../submodules/scanagroempresa/kobo_sync_service:/home/web/kobo_sync_service
   environment:
     # Put random string on secret key
     DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-

@@ -19,7 +19,7 @@ fi
 # Build Args Environment
 
 if [ -z "$SCANAGROEMPRESA_TAG" ]; then
-	SCANAGROEMPRESA_TAG=master
+	SCANAGROEMPRESA_TAG=develop
 fi
 
 echo "SCANAGROEMPRESA_TAG=${SCANAGROEMPRESA_TAG}"
