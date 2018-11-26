@@ -25,6 +25,7 @@ if psql -d ${PGDATABASE} -c '\l'; then
 else
 	>&2 echo "${PGDATABASE} is unavailable. Creating a new one."
 	createdb ${PGDATABASE}
+	psql -d ${PGDATABASE} -c "create extension postgis;"
 fi
 
 >&2 echo "${PGDATABASE} are up - executing command"
