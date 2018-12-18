@@ -23,4 +23,6 @@ COPY --from=intermediate /usr/src/scanagroempresa-docker/django_project/ /usr/sr
 
 ADD install-theme-app.sh /install-theme-app.sh
 
+ADD entrypoint.sh /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
