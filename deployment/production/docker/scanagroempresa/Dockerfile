@@ -30,6 +30,8 @@ COPY --from=intermediate /usr/src/scanagroempresa/kobo_sync_service/ /home/web/k
 
 ADD entrypoint.sh /entrypoint.sh
 
+ADD install-theme-app.sh /install-theme-app.sh
+
 ADD wait-for-databases.sh /wait-for-databases.sh
 
 ADD wait-for-kobo-cache-databases.sh /wait-for-kobo-cache-databases.sh

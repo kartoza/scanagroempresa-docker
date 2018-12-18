@@ -71,6 +71,12 @@ services:
 
       {% endfor %}
 
+      {% if geonode.environment.USE_GEONODE_THEME_APP is defined and geonode.environment.USE_GEONODE_THEME_APP %}
+
+      - ../submodules/geonode_custom_theme:{{ geonode.environment.GEONODE_THEME_APP_PATH }}
+
+      {% endif %}
+
       - ./static:/home/web/static:rw
       - ./media:/home/web/media:rw
       - ./logs:/var/log/
@@ -108,9 +114,9 @@ services:
 
       {% endfor %}
 
-      {% if scanagroempresa.environment.USE_THEME_APP is defined and scanagroempresa.environment.USE_THEME_APP %}
+      {% if scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP is defined and scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP %}
 
-      - '../submodules/scanagroempresa_custom_theme:{{ scanagroempresa.environment.THEME_APP_PATH }}'
+      - '../submodules/scanagroempresa_custom_theme:{{ scanagroempresa.environment.SCANAGROEMPRESA_THEME_APP_PATH }}'
 
       {% endif %}
 

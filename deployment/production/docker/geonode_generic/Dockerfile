@@ -20,3 +20,7 @@ RUN git clone --branch ${SCANAGROEMPRESA_DOCKER_TAG} --depth 1 git@github.com:ka
 FROM geosolutionsit/geonode-generic:1.0
 
 COPY --from=intermediate /usr/src/scanagroempresa-docker/django_project/ /usr/src/scanagroempresa-docker/
+
+ADD install-theme-app.sh /install-theme-app.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

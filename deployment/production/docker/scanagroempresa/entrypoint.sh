@@ -4,6 +4,9 @@
 sh /wait-for-databases.sh
 sh /wait-for-kobo-cache-databases.sh
 
+# Install custom theme for scanagroempresa
+sh /install-theme-app.sh
+
 # Run collectstatic
 python manage.py collectstatic --noinput
 # Run migrate

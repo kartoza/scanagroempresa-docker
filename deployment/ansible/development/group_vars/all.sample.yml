@@ -96,9 +96,9 @@ scanagroempresa:
     REDIS_DEFAULT_DB: 1
     REDIS_SESSION_DB: 2
     # Skin App Settings
-    USE_THEME_APP: False
-    THEME_APP_PATH: /home/web/scanagroempresa_custom_theme
-    THEME_APP_NAME: scanagroempresa_custom_theme
+    USE_SCANAGROEMPRESA_THEME_APP: False
+    SCANAGROEMPRESA_THEME_APP_PATH: /home/web/scanagroempresa_custom_theme
+    SCANAGROEMPRESA_THEME_APP_NAME: scanagroempresa_custom_theme
 
 
 geonode:
@@ -123,6 +123,10 @@ geonode:
     ALLOWED_HOSTS: ['scanagroempresa-docker.test']
     ADMIN_EMAILS: dimas@kartoza.com
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
+    # Skin App Settings
+    USE_GEONODE_THEME_APP: False
+    GEONODE_THEME_APP_PATH: /usr/src/geonode_custom_theme
+    GEONODE_THEME_APP_NAME: geonode_custom_theme
 
 geoserver:
   environment:
