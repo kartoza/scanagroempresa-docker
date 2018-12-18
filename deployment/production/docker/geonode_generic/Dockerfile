@@ -25,6 +25,6 @@ ADD install-theme-app.sh /install-theme-app.sh
 
 ADD entrypoint.sh /entrypoint.sh
 
-ADD uwsgi.ini /uwsgi.ini
+ADD uwsgi.ini /usr/src/app/uwsgi.ini
 
 ENTRYPOINT ["/entrypoint.sh"]
