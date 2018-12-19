@@ -184,6 +184,9 @@ logs:
 logs-scanagroempresa:
 	@docker-compose logs -f --tail=30 scanagroempresa
 
+logs-geoserver:
+	@docker-compose logs -f --tail=30 geoserver
+
 logs-redis:
 	@docker-compose logs -f --tail=30 redis
 
@@ -215,6 +218,14 @@ shell:
 shell-scanagroempresa:
 	@docker-compose exec scanagroempresa /bin/bash
 
+shell-geoserver:
+	@docker-compose exec geoserver /bin/bash
+
+shell-nginx:
+	@docker-compose exec web /bin/bash
+
+restart-geoserver:
+	@docker-compose restart geoserver
 
 superuser:
 	@echo

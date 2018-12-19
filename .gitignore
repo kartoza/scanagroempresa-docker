@@ -138,3 +138,5 @@ deployment/production/docker/geonode_generic/ssh_key
 
 deployment/rabbitmq-data
 deployment/redis-data
+
+submodules/scanagroempresa_custom_theme

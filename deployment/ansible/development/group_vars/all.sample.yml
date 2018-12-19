@@ -43,11 +43,12 @@ scanagroempresa:
   command: /usr/sbin/sshd -D
   volumes:
     - ../submodules/scanagroempresa/django_app:/home/web/extra_app
+    - ../submodules/scanagroempresa/kobo_sync_service:/home/web/kobo_sync_service
   environment:
     # Put random string on secret key
     DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     PYTHONPATH: /home/web/extra_app
-    ROOT_URLCONF: scanterra.urls
+    ROOT_URLCONF: scanterra.root_urls
     URL_PREFIX: 'scanagroempresa/'
     DEBUG: True
     DJANGO_SETTINGS_MODULE: scanterra.settings_prod
@@ -61,9 +62,19 @@ scanagroempresa:
     PGPASSWORD: docker
     PGHOST: db
     PGPORT: 5432
+    DATA_PGDATABASE: kobo_form_data
+    DATA_PGUSER: docker
+    DATA_PGPASSWORD: docker
+    DATA_PGHOST: db
+    DATA_PGPORT: 5432
     # For GeoNode (should not end with slash /)
     GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
-    GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305
+    GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305/geoserver
+    GEONODE_PGDATABASE: gis
+    GEONODE_PGUSER: docker
+    GEONODE_PGPASSWORD: docker
+    GEONODE_PGHOST: db
+    GEONODE_PGPORT: 5432
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
@@ -71,11 +82,23 @@ scanagroempresa:
     KOBO_API_CLIENTSECRET: ''
     KOBO_API_USER: ''
     KOBO_API_PASSWORD: ''
+    # These settings after this is for low level database access
+    # Since kobotoolbox stack is not managed by this orchestration, fill in
+    # the correct credentials and database details that you are going to use.
+    KOBO_PGDATABASE: kobotoolbox
+    KOBO_PGUSER: docker
+    KOBO_PGASSWORD: docker
+    KOBO_PGHOST: db
+    KOBO_PGPORT: 5432
     # Redis Settings
     REDIS_HOST: redis
     REDIS_PORT: 6379
     REDIS_DEFAULT_DB: 1
     REDIS_SESSION_DB: 2
+    # Skin App Settings
+    USE_SCANAGROEMPRESA_THEME_APP: False
+    SCANAGROEMPRESA_THEME_APP_PATH: /home/web/scanagroempresa_custom_theme
+    SCANAGROEMPRESA_THEME_APP_NAME: scanagroempresa_custom_theme
 
 
 geonode:
@@ -100,11 +123,17 @@ geonode:
     ALLOWED_HOSTS: ['scanagroempresa-docker.test']
     ADMIN_EMAILS: dimas@kartoza.com
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
+    # Skin App Settings
+    USE_GEONODE_THEME_APP: False
+    GEONODE_THEME_APP_PATH: /usr/src/geonode_custom_theme
+    GEONODE_THEME_APP_NAME: geonode_custom_theme
 
 geoserver:
   environment:
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
-    SITEURL: http://scanagroempresa-docker.test:63306/
+    SITEURL: http://scanagroempresa-docker.test:63305/geoserver
+    # The public url of GeoNode API to allow GeoServer to connect to it
+    NGINX_BASE_URL: http://scanagroempresa-docker.test:63302/
 
 interpreters:
   inasafe_django:

@@ -1,4 +1,0 @@
-Django>=2.1,<=2.2
-requests
-requests_oauthlib
-uwsgi
