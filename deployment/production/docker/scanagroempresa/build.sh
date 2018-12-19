@@ -18,16 +18,16 @@ fi
 
 # Build Args Environment
 
-if [ -z "$SCANWEBGIS_TAG" ]; then
-	SCANWEBGIS_TAG=master
+if [ -z "$SCANAGROEMPRESA_TAG" ]; then
+	SCANAGROEMPRESA_TAG=develop
 fi
 
-echo "SCANWEBGIS_TAG=${SCANWEBGIS_TAG}"
+echo "SCANAGROEMPRESA_TAG=${SCANAGROEMPRESA_TAG}"
 
 echo "Build: $REPO_NAME/$IMAGE_NAME:$TAG_NAME"
 
 docker build -t ${REPO_NAME}/${IMAGE_NAME} \
-	--build-arg SCANWEBGIS_TAG=${SCANWEBGIS_TAG} \
+	--build-arg SCANAGROEMPRESA_TAG=${SCANAGROEMPRESA_TAG} \
 	${BUILD_ARGS} .
 docker tag ${REPO_NAME}/${IMAGE_NAME}:latest ${REPO_NAME}/${IMAGE_NAME}:${TAG_NAME}
 docker push ${REPO_NAME}/${IMAGE_NAME}:${TAG_NAME}

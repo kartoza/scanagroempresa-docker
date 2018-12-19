@@ -1,6 +1,7 @@
 
         <env name="PYTHONUNBUFFERED" value="1" />
         <env name="PATH" value="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" />
+        <env name="PYTHONPATH" value="/usr/src:/usr/src/app:{% if geonode.environment.USE_GEONODE_THEME_APP is defined and geonode.environment.USE_GEONODE_THEME_APP %}{{ geonode.environment.GEONODE_THEME_APP_PATH }}{% endif %}" />
         <env name="LANG" value="C.UTF-8" />
 
         {# Django environment #}

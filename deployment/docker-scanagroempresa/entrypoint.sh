@@ -2,6 +2,7 @@
 
 # Check database exists
 sh /wait-for-databases.sh
+sh /wait-for-kobo-cache-databases.sh
 
 # Run collectstatic
 python manage.py collectstatic --noinput

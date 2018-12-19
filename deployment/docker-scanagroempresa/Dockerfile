@@ -24,6 +24,8 @@ ADD entrypoint.sh /entrypoint.sh
 
 ADD wait-for-databases.sh /wait-for-databases.sh
 
+ADD wait-for-kobo-cache-databases.sh /wait-for-kobo-cache-databases.sh
+
 WORKDIR /home/web/extra_app
 
 EXPOSE 22

@@ -71,6 +71,12 @@ services:
 
       {% endfor %}
 
+      {% if geonode.environment.USE_GEONODE_THEME_APP is defined and geonode.environment.USE_GEONODE_THEME_APP %}
+
+      - ../submodules/geonode_custom_theme:{{ geonode.environment.GEONODE_THEME_APP_PATH }}
+
+      {% endif %}
+
       - ./static:/home/web/static:rw
       - ./media:/home/web/media:rw
       - ./logs:/var/log/
@@ -102,11 +108,17 @@ services:
     volumes:
       - {{ django.app_location }}:/home/web/django_project
 
-      {% for value in django.volumes %}
+      {% for value in scanagroempresa.volumes %}
 
       - {{ value }}
 
       {% endfor %}
+
+      {% if scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP is defined and scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP %}
+
+      - '../submodules/scanagroempresa_custom_theme:{{ scanagroempresa.environment.SCANAGROEMPRESA_THEME_APP_PATH }}'
+
+      {% endif %}
 
       - ../.scanagroempresa_pycharm_helpers:/root/.pycharm_helpers
 
