@@ -48,7 +48,7 @@ scanagroempresa:
     # Put random string on secret key
     DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     PYTHONPATH: /home/web/extra_app
-    ROOT_URLCONF: scanterra.urls
+    ROOT_URLCONF: scanterra.root_urls
     URL_PREFIX: 'scanagroempresa/'
     DEBUG: True
     DJANGO_SETTINGS_MODULE: scanterra.settings_prod
@@ -69,7 +69,7 @@ scanagroempresa:
     DATA_PGPORT: 5432
     # For GeoNode (should not end with slash /)
     GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
-    GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305
+    GEOSERVER_SERVER_HOST: http://scanagroempresa-docker.test:63305/geoserver
     GEONODE_PGDATABASE: gis
     GEONODE_PGUSER: docker
     GEONODE_PGPASSWORD: docker
@@ -131,7 +131,9 @@ geonode:
 geoserver:
   environment:
     GEOSERVER_ADMIN_PASSWORD: admingeoserver
-    SITEURL: http://scanagroempresa-docker.test:63306/
+    SITEURL: http://scanagroempresa-docker.test:63305/geoserver
+    # The public url of GeoNode API to allow GeoServer to connect to it
+    NGINX_BASE_URL: http://scanagroempresa-docker.test:63302/
 
 interpreters:
   inasafe_django:
