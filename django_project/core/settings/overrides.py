@@ -96,6 +96,7 @@ GEOSERVER_PUBLIC_LOCATION = validate_url(
 
 OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
 OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
+OGC_SERVER['default']['DATASTORE'] = os.environ.get('DEFAULT_BACKEND_DATASTORE', '')
 
 # Custom theme settings
 USE_GEONODE_THEME_APP = ast.literal_eval(
