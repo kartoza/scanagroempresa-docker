@@ -86,14 +86,15 @@ if os.getenv('DEFAULT_BACKEND_DATASTORE'):
 DEBUG = strtobool(os.environ.get('DEBUG', 'False'))
 
 # Email settings
-EMAIL_HOST = 'smtp'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'noreply'
-EMAIL_HOST_PASSWORD = 'docker'
-EMAIL_USE_TLS = False
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'noreply')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'docker')
+EMAIL_USE_TLS = strtobool(os.environ.get('EMAIL_USE_TLS', 'False'))
 DEFAULT_FROM_EMAIL = os.environ.get(
     'DEFAULT_FROM_EMAIL', 'support@kartoza.com')
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = os.environ.get(
+    'EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
