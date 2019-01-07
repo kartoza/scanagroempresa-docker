@@ -13,7 +13,6 @@ volumes:
 services:
   smtp:
     image: catatnight/postfix
-    hostname: postfix
     environment:
       # You could change this to something more suitable
       - maildomain=kartoza.com
