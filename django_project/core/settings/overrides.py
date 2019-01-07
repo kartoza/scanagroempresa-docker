@@ -3,6 +3,8 @@ import ast
 import os
 import importlib
 
+from distutils.util import strtobool
+
 from geonode_generic.settings import *  # noqa
 
 from core.settings.utils import validate_url
@@ -81,6 +83,19 @@ if os.getenv('DEFAULT_BACKEND_DATASTORE'):
         'PORT': 5432
     }
 
+DEBUG = strtobool(os.environ.get('DEBUG', 'False'))
+
+# Email settings
+EMAIL_HOST = 'smtp'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'noreply'
+EMAIL_HOST_PASSWORD = 'docker'
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL', 'support@kartoza.com')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Perform URL validations
 # SITEURL should not end with slash
