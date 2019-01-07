@@ -93,6 +93,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'docker')
 EMAIL_USE_TLS = strtobool(os.environ.get('EMAIL_USE_TLS', 'False'))
 DEFAULT_FROM_EMAIL = os.environ.get(
     'DEFAULT_FROM_EMAIL', 'support@kartoza.com')
+EMAIL_SUBJECT_PREFIX = os.environ.get(
+    'EMAIL_SUBJECT_PREFIX', '[SCANAGROEMPRESA]')
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 if DEBUG:
