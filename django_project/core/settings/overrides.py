@@ -127,3 +127,6 @@ if USE_GEONODE_THEME_APP:
     theme_settings = update_settings_from(
         '{app_name}.settings'.format(app_name=GEONODE_THEME_APP_NAME))
     locals().update(theme_settings)
+
+# custom SAE context processor
+TEMPLATES[0]['OPTIONS']['context_processors'].append('core.context_processors.sae.sae_context')
