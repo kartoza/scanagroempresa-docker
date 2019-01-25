@@ -7,7 +7,8 @@ from distutils.util import strtobool
 
 from geonode_generic.settings import *  # noqa
 
-from core.settings.utils import validate_url
+from core.settings.utils import validate_url, absolute_path
+
 
 def update_settings_from(settings_name):
     """This method will try to update settings.
@@ -130,3 +131,5 @@ if USE_GEONODE_THEME_APP:
 
 # custom SAE context processor
 TEMPLATES[0]['OPTIONS']['context_processors'].append('core.context_processors.sae.sae_context')
+
+TEMPLATES[0]['DIRS'].append(absolute_path('core', 'base_templates'))
