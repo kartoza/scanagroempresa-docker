@@ -132,4 +132,4 @@ if USE_GEONODE_THEME_APP:
 # custom SAE context processor
 TEMPLATES[0]['OPTIONS']['context_processors'].append('core.context_processors.sae.sae_context')
 
-TEMPLATES[0]['DIRS'].append(absolute_path('core', 'base_templates'))
+TEMPLATES[0]['DIRS'].insert(0, absolute_path('core', 'base_templates'))
