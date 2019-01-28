@@ -140,3 +140,5 @@ deployment/rabbitmq-data
 deployment/redis-data
 
 submodules/scanagroempresa_custom_theme
+
+.DS_Store
