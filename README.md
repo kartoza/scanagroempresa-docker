@@ -11,8 +11,47 @@ What this stack includes:
 
 # Development Setup
 
+## Setting local environment
+
+Clone this repo by typing one of these commands:
+
+- `git clone https://github.com/kartoza/scanagroempresa-docker`
+- `git clone git@github.com:kartoza/scanagroempresa-docker.git`
+
+Go to the new folder: `cd scanagroempresa-docker`
+
+Update submodules by typing these 4 commands:
+
+- git remote update
+- git submodule init
+- git submodule sync
+- git submodule update
+
+Notice there is a new folder called submodules.
+
 To use this repo locally as development environment, refer to [Ansible Guide](deployment/ansible/README.md).
+
 Note that we heavily used PyCharm to setup development environment (to Run Django, etc.)
+
+You can run the server from pycharm by:
+
+First, do these:
+
+- `cd deployment/ansible/development/group_vars`
+- `cp all.sample.yml all.yml`
+
+Changes *all.yml* accordingly, particularly these fields:
+
+- remote_user
+- remote_group
+- project_path
+
+Then go to parent directory (scanagroempresa-docker).
+
+- `cd deployment`
+- `make setup-ansible`
+
+If the configuration is correct, the server can now be started from pycharm.
 
 Ansible setup will generate `docker-compose.override.yml` which in turn contains
 services necessary for integration between services.
