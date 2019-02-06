@@ -2,10 +2,14 @@
 {% load i18n %}
 
 {% block tabs %}
+{% with user.get_group_permissions as group_perms %}
+{% if 'core.view_data_menu' in group_perms %}
 <li id="nav_layers">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Data" %}<i class="fa fa-angle-down fa-lg"></i></a>
 	<ul class="dropdown-menu">
+        {% if 'core.view_data_layers_submenu' in group_perms %}
 		<li><a href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Layers" %}</a></li>
+        {% endif %}
 		<li><a href="{% url "document_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Documents" %}</a></li>
 		<li><a href="{% url "services" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Remote Services" %}</a></li>
 		{% if user.is_authenticated %}
@@ -21,6 +25,7 @@
 		{% endif %}
 	</ul>
 </li>
+{% endif %}
 
 <li id="nav_maps">
 	{% if user.is_authenticated %}
@@ -49,11 +54,14 @@
 		<li><a href="{% url "geonode.invitations:geonode-send-invite" %}">{% trans "Invite Users" %}</a></li>
 		
 		{% if user.is_superuser %}
-		<li><a href="{{SITEURL}}admin/people/profile/add/">{% trans "Add User" %}</a></li>
+		<li><a href="{{SITEURL}}/admin/people/profile/add/">{% trans "Add User" %}</a></li>
 		<li><a href="{% url "group_create" %}">{% trans "Create Group" %}</a></li>
 		{% endif %}
 
 	</ul>
 </li>
-
-{% endblock %}
+<li>
+	<a href="{{ SCANAGROEMPRESA_URL }}">ScanAgroEmpresa</a>
+</li>
+{% endwith %}
+{% endblock tabs %}
