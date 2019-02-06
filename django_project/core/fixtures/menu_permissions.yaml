@@ -2,7 +2,30 @@
 
 core:
   menu_permissions:
+    # For Data
     - view_data_menu
     - view_data_layers_submenu
+    - view_data_documents_submenu
+    - view_data_remoteservices_submenu
+    - view_data_uploadlayer_submenu
+    - view_data_uploaddocument_submenu
+    - view_data_addremoteservice_submenu
+    # For Maps
     - view_maps_menu
-    - view_maps_explore_submenu
+    - view_maps_exploremaps_submenu
+    - view_maps_createmap_submenu
+    # For About
+    - view_about_menu
+    - view_about_people_submenu
+    - view_about_groups_submenu
+    - view_about_groupcategories_submenu
+    - view_about_announcements_submenu
+    - view_about_inviteusers_submenu
+    - view_about_adduser_submenu
+    - view_about_creategroup_submenu
+    # For Config
+    - view_config_admin_submenu
+    - view_config_geoserver_submenu
+    - view_config_monitoring_submenu
+
+    # TODO: For SAE
