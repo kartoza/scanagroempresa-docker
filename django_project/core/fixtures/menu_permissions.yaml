@@ -1,0 +1,8 @@
+---
+
+core:
+  menu_permissions:
+    - view_data_menu
+    - view_data_layers_submenu
+    - view_maps_menu
+    - view_maps_explore_submenu

@@ -1,14 +1,15 @@
 # coding=utf-8
-from geonode.base import BaseAppConfig
+from django.apps.config import AppConfig
+from core.config_hook.permissions import initialize_permissions
 
 
-class AppConfig(BaseAppConfig):
+class CoreAppConfig(AppConfig):
 
     name = "core"
     label = "core"
 
     def ready(self):
-        super(AppConfig, self).ready()
+        super(CoreAppConfig, self).ready()
         # check settings
         from django.conf import settings
 
@@ -25,3 +26,9 @@ class AppConfig(BaseAppConfig):
                 installed_apps.append(app)
 
         settings.INSTALLED_APPS = installed_apps
+
+        # Install custom permissions
+        initialize_permissions()
+
+        # Init admin overrides
+        from core.config_hook import admin  # noqa
