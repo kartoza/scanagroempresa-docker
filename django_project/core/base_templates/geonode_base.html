@@ -2,66 +2,96 @@
 {% load i18n %}
 
 {% block tabs %}
-{% with user.get_group_permissions as group_perms %}
-{% if 'core.view_data_menu' in group_perms %}
-<li id="nav_layers">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Data" %}<i class="fa fa-angle-down fa-lg"></i></a>
-	<ul class="dropdown-menu">
-        {% if 'core.view_data_layers_submenu' in group_perms %}
-		<li><a href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Layers" %}</a></li>
+    {% with user.get_group_permissions as group_perms %}
+        {% if 'core.view__data__menu' in group_perms %}
+            <li id="nav_layers">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Data" %}<i class="fa fa-angle-down fa-lg"></i></a>
+                <ul class="dropdown-menu">
+                {% if 'core.view__data__layers__submenu' in group_perms %}
+                    <li><a href="{% url "layer_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Layers" %}</a></li>
+                {% endif %}
+                {% if 'core.view__data__documents__submenu' in group_perms %}
+                    <li><a href="{% url "document_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Documents" %}</a></li>
+                {% endif %}
+                {% if 'core.view__data__remote_services__submenu' in group_perms %}
+                    <li><a href="{% url "services" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Remote Services" %}</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li role="separator" class="divider"></li>
+                    {% if 'core.view__data__upload_layer__submenu' in group_perms %}
+                        <li><a href="{% url "layer_upload" %}">Upload Layer</a></li>
+                    {% endif %}
+                    {% if 'geonode.contrib.createlayer' in INSTALLED_APPS %}
+                        <li><a href="{% url "layer_create" %}">{% trans "Create Layer" %}</a></li>
+                    {% endif %}
+                    {% if 'core.view__data__upload_document__submenu' in group_perms %}
+                        <li><a href="{% url "document_upload" %}">Upload Document</a></li>
+                    {% endif %}
+                {% endif %}
+                {% if user.is_superuser or user.is_staff or 'core.view__data__add_remote_service__submenu' in group_perms %}
+                    {# Redundant check here as superuser is able to do everything, but preserved to remember the permission rules #}
+                    <li><a href="{% url "register_service" %}">{% trans "Add Remote Service" %}</a></li>
+                {% endif %}
+                </ul>
+            </li>
         {% endif %}
-		<li><a href="{% url "document_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Documents" %}</a></li>
-		<li><a href="{% url "services" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Remote Services" %}</a></li>
-		{% if user.is_authenticated %}
-		    <li role="separator" class="divider"></li>
-		    <li><a href="{% url "layer_upload" %}">Upload Layer</a></li>
-		    {% if 'geonode.contrib.createlayer' in INSTALLED_APPS %}
-		        <li><a href="{% url "layer_create" %}">{% trans "Create Layer" %}</a></li>
-		    {% endif %}
-		    <li><a href="{% url "document_upload" %}">Upload Document</a></li>
-		{% endif %}
-		{% if user.is_superuser or user.is_staff %}
-		    <li><a href="{% url "register_service" %}">{% trans "Add Remote Service" %}</a></li>
-		{% endif %}
-	</ul>
-</li>
-{% endif %}
 
-<li id="nav_maps">
-	{% if user.is_authenticated %}
-  	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Maps" %}<i class="fa fa-angle-down fa-lg"></i></a>
-  	<ul class="dropdown-menu">
-	    <li><a href="{% url "maps_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Explore Maps" %}</a></li>
-	    <li> <a href="{% url "new_map" %}">{% trans "Create Map" %}</a></li>
-  	</ul>
-  	{% else %}
-  	<a href="{% url "maps_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Maps" %}</a>
-  	{% endif %}
-</li>
+        {% if 'core.view__maps__menu' in group_perms %}
+            <li id="nav_maps">
+            {% if user.is_authenticated %}
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "Maps" %}<i class="fa fa-angle-down fa-lg"></i></a>
+                <ul class="dropdown-menu">
+                {% if 'core.view__maps__explore_maps__submenu' in group_perms %}
+                    <li><a href="{% url "maps_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Explore Maps" %}</a></li>
+                {% endif %}
+                {% if 'core.view__maps__create_map__submenu' in group_perms %}
+                    <li> <a href="{% url "new_map" %}">{% trans "Create Map" %}</a></li>
+                {% endif %}
+                </ul>
+            {% else %}
+                <a href="{% url "maps_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Maps" %}</a>
+            {% endif %}
+            </li>
+        {% endif %}
 
-<li>
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %}<i class="fa fa-angle-down fa-lg"></i></a>
-    <ul class="dropdown-menu">
-		<li><a href="{% url "profile_browse" %}">{% trans "People" %}</a></li>
-		<li><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
-		<li><a href="{% url "group_category_list" %}">{% trans "Group Categories" %}</a></li>
-		
-		{% if perms.announcements.can_manage %}
-		<li><a href="{% url "announcements_list" %}">{% trans "Announcements" %}</a></li>
-		{% endif %}
-		
-		<li role="separator" class="divider"></li>
-		<li><a href="{% url "geonode.invitations:geonode-send-invite" %}">{% trans "Invite Users" %}</a></li>
-		
-		{% if user.is_superuser %}
-        <li><a href="{% url "admin:people_profile_add" %}">{% trans "Add User" %}</a></li>
-		<li><a href="{% url "group_create" %}">{% trans "Create Group" %}</a></li>
-		{% endif %}
+        {% if 'core.view__about__menu' in group_perms %}
+            <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans "About" %}<i class="fa fa-angle-down fa-lg"></i></a>
+                <ul class="dropdown-menu">
+                {% if 'core.view__about__people__submenu' in group_perms %}
+                    <li><a href="{% url "profile_browse" %}">{% trans "People" %}</a></li>
+                {% endif %}
+                {% if 'core.view__about__groups__submenu' in group_perms %}
+                    <li><a href="{% url "group_list" %}">{% trans "Groups" %}</a></li>
+                {% endif %}
+                {% if 'core.view__about__group_categories__submenu' in group_perms %}
+                    <li><a href="{% url "group_category_list" %}">{% trans "Group Categories" %}</a></li>
+                {% endif %}
 
-	</ul>
-</li>
-<li>
-	<a href="{{ SCANAGROEMPRESA_URL }}">ScanAgroEmpresa</a>
-</li>
-{% endwith %}
+                {% if perms.announcements.can_manage and 'core.view__about__announcements__submenu' in group_perms %}
+                    <li><a href="{% url "announcements_list" %}">{% trans "Announcements" %}</a></li>
+                {% endif %}
+
+                    <li role="separator" class="divider"></li>
+
+                {% if 'core.view__about__invite_users__submenu' in group_perms %}
+                    <li><a href="{% url "geonode.invitations:geonode-send-invite" %}">{% trans "Invite Users" %}</a></li>
+                {% endif %}
+
+                {% if user.is_superuser or 'core.view__about__add_user__submenu' in group_perms %}
+                    {# Superuser actually can do everything. This is a redundant check. #}
+                    <li><a href="{% url "admin:people_profile_add" %}">{% trans "Add User" %}</a></li>
+                {% endif %}
+                {% if user.is_superuser or 'core.view__about__create_group__submenu' in group_perms %}
+                    <li><a href="{% url "group_create" %}">{% trans "Create Group" %}</a></li>
+                {% endif %}
+
+                </ul>
+            </li>
+        {% endif %}
+
+        <li>
+            <a href="{{ SCANAGROEMPRESA_URL }}">ScanAgroEmpresa</a>
+        </li>
+    {% endwith %}
 {% endblock tabs %}
