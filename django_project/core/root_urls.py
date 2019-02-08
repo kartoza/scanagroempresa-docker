@@ -6,6 +6,7 @@ from django.conf import settings
 from django.views.generic import RedirectView, TemplateView
 
 from geonode_generic.urls import urlpatterns
+from core.custom_rest_api.urls import api
 
 # We need to remove i18n if we want to use prefixed url.
 for pattern in urlpatterns:
@@ -25,5 +26,6 @@ urlpatterns = [
     url(r'^geonode/?$',
         TemplateView.as_view(template_name='site_index.html'),
         name='home'),
+    url(settings.GEONODE_PREFIX, include(api.urls)),
     url(settings.GEONODE_PREFIX, include(urlpatterns)),
 ]
