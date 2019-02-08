@@ -27,7 +27,7 @@ class PermissionResource(ModelResource):
     To query permissions that a group have, send request to :
 
     api/permissions/?group=<groupid>
-    api/permissions/?group__slug=<groupslug>
+    api/permissions/?group__name=<groupslug>
 
     where <groupid> comes from `id` of django auth Group models.
     however it is not always practical to have this `id`.
@@ -143,7 +143,7 @@ class PermissionResource(ModelResource):
             'user__username': ALL,
             'group': ALL,
             'group__id': ALL,
-            'group__slug': ALL,
+            'group__name': ALL,
             'current_user': ALL
         }
         queryset = Permission.objects.distinct().order_by(
