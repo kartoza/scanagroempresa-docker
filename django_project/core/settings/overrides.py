@@ -89,6 +89,7 @@ DEBUG = strtobool(os.environ.get('DEBUG', 'False'))
 # Contrib settings
 INSTALLED_APPS += (
     'core.config_hook',
+    'core.custom_rest_api'
 )
 
 # Email settings
