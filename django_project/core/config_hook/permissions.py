@@ -17,8 +17,6 @@ def initialize_permissions():
     from django.apps import apps
     Permission = apps.get_model('auth', 'Permission')
     ContentType = apps.get_model('contenttypes', 'ContentType')
-    core_permissions_content_type, __ = ContentType.objects.get_or_create(
-        app_label='core', model='menu_permissions')
     menu_permissions_fixture_path = absolute_path(
         'core', 'fixtures', 'menu_permissions.yaml')
 
@@ -29,12 +27,15 @@ def initialize_permissions():
             LOGGER.exception(e)
             return
 
-    perms_list = fixture['core']['menu_permissions']
-    for perm in perms_list:
-        perm_object, created = Permission.objects.get_or_create(
-            name=perm, codename=perm,
-            content_type=core_permissions_content_type)
-        if created:
-            LOGGER.info(
-                'Creating new custom permissions: {}'.format(
-                    str(perm_object)))
+    permission_models = fixture['core']
+    for model_name, perms_list in permission_models.iteritems():
+        core_permissions_content_type, __ = ContentType.objects.get_or_create(
+            app_label='core', model=model_name)
+        for perm in perms_list:
+            perm_object, created = Permission.objects.get_or_create(
+                name=perm, codename=perm,
+                content_type=core_permissions_content_type)
+            if created:
+                LOGGER.info(
+                    'Creating new custom permissions: {}'.format(
+                        str(perm_object)))

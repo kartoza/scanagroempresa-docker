@@ -1,7 +1,7 @@
 ---
 
 core:
-  menu_permissions:
+  geonode_menu_permissions:
     ## Data Menu
     - view__data__menu
     - view__data__layers__submenu
@@ -36,6 +36,7 @@ core:
     - view__profile__monitoring__submenu
     - view__profile__help__submenu
 
+  sae_menu_permissions:
     ## For SAE
     - view__admin__menu
     - view__bi__menu
