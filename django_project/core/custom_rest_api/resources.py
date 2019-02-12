@@ -5,7 +5,7 @@ from geonode.api.authorization import GeonodeApiKeyAuthentication
 from geonode.people.models import Profile
 from tastypie import fields
 from tastypie.authentication import MultiAuthentication, SessionAuthentication
-from tastypie.constants import ALL
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
 
@@ -40,9 +40,11 @@ class PermissionResource(ModelResource):
     api/permissions/?current_user=1
     """
 
-    app_label = fields.CharField()
+    app_label = fields.CharField(
+        attribute='content_type__app_label')
     model_name = fields.CharField()
-    model_class_name = fields.CharField()
+    model_class_name = fields.CharField(
+        attribute='content_type__model')
 
     def build_filters(self, filters=None, **kwargs):
         """Apply custom filters.
@@ -89,15 +91,11 @@ class PermissionResource(ModelResource):
 
         current_queryset = self.get_object_list(request)
 
-        # Check if superman user
+        # Check user permissions
         if user:
-            if user.is_superuser:
-                # We returned all permissions
-                return self.get_object_list(request)
-
             # We actually can query all available permission for this user
-            # But we need to honor other filters, so we fetch it but doesn't
-            # immediately return the result.
+            # But we need to honor other filters, so we fetch it but
+            # doesn't immediately return the result.
             # get_all_permissions doesn't return queryset
             # so we use a little hack to filter the queryset.
             # this make sure the filter chain works later.
@@ -111,6 +109,7 @@ class PermissionResource(ModelResource):
                     perm_queries = Q(
                         content_type__app_label=app_label, codename=codename)
             current_queryset = current_queryset.filter(perm_queries)
+
             # Remove all user related filters, because we convert it to above
             for key in list(applicable_filters.iterkeys()):
                 if 'user' in key:
@@ -119,23 +118,17 @@ class PermissionResource(ModelResource):
         # Combine all filters
         return current_queryset.filter(**applicable_filters)
 
-    def dehydrate_app_label(self, bundle):
-        obj = bundle.obj
-        """:type: Permission"""
-        return obj.content_type.app_label
-
     def dehydrate_model_name(self, bundle):
         obj = bundle.obj
         """:type: Permission"""
         return obj.content_type.name
 
-    def dehydrate_model_class_name(self, bundle):
-        obj = bundle.obj
-        """:type: Permission"""
-        return obj.content_type.model
-
     class Meta:
         filtering = {
+            'app_label': ALL,
+            'model_name': ALL,
+            'model_class_name': ALL,
+            'content_type': ALL_WITH_RELATIONS,
             'codename': ALL,
             'name': ALL,
             'user': ALL,
