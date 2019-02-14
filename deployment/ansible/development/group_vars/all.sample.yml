@@ -20,6 +20,7 @@ django:
     - ../submodules/scanagroempresa/django_app:/home/web/extra_app
   environment:
     GEONODE_PREFIX: "''"
+    GEONODE_INDEX_PREFIX: "r'^administration/?'"
     SITE_DOMAIN_NAME: 'http://scanagroempresa-docker.test:63302'
     GEOCONTEXT_URL: 'http://localhost:65402'
     CONTACT_US_EMAIL: 'dimas@kartoza.com'
@@ -49,9 +50,10 @@ scanagroempresa:
     DJANGO_SECRET_KEY: 2510)aks1u*9mgjjss_+s1@rutm3v(sfv5hw8k#*t(jsdmg-
     PYTHONPATH: /home/web/extra_app
     # Use this one if using Custom theme
-    # PYTHONPATH: PYTHONPATH: /home/web/extra_app:/home/web/scanagroempresa_custom_theme
+#    PYTHONPATH: /home/web/extra_app:/home/web/scanagroempresa_custom_theme
     ROOT_URLCONF: scanterra.root_urls
     URL_PREFIX: 'scanagroempresa/'
+    GEONODE_INDEX_PREFIX: 'administration/'
     DEBUG: True
     DJANGO_SETTINGS_MODULE: scanterra.settings_prod
     # Do not end with slash /
@@ -70,7 +72,11 @@ scanagroempresa:
     DATA_PGHOST: db
     DATA_PGPORT: 5432
     # For GeoNode (should not end with slash /)
+    # Public resolvable address of GeoNode server to link the URL
+    GEONODE_SERVER_PUBLIC_HOST: http://scanagroempresa-docker.test:63302
+    # Private or public address of GeoNode for SAE API connection
     GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
+    # Public address of GeoServer for API connections
     GEOSERVER_HOST: http://scanagroempresa-docker.test:63305/geoserver
     # Set it to match GeoServer credentials
     GEOSERVER_ADMIN_USER: admin

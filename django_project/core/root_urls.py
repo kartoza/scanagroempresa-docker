@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import LocaleRegexURLResolver
 from django.conf import settings
 from django.views.generic import RedirectView, TemplateView
@@ -23,8 +24,10 @@ urlpatterns.remove(admin_pattern)
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url=settings.SCANAGROEMPRESA_URL)),
-    url(r'^geonode/?$',
-        TemplateView.as_view(template_name='site_index.html'),
+    url(settings.GEONODE_INDEX_PREFIX,
+        login_required(
+            TemplateView.as_view(template_name='site_index.html'),
+            login_url=settings.SCANAGROEMPRESA_URL),
         name='home'),
     url(settings.GEONODE_PREFIX, include(api.urls)),
     url(settings.GEONODE_PREFIX, include(urlpatterns)),
