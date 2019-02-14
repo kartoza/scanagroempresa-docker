@@ -53,6 +53,11 @@ def update_settings_from(settings_name):
         for k in dir(app_settings) if not k.startswith('_')
     }
 
+# Prefix to GeoNode index page
+# We used ast for this to handle regex literal
+GEONODE_INDEX_PREFIX = ast.literal_eval(
+    os.environ.get('GEONODE_INDEX_PREFIX', "r'^administration/?$'")
+)
 GEONODE_PREFIX = ast.literal_eval(
     os.environ.get('GEONODE_PREFIX', "''")
 )
