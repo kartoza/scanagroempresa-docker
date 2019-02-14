@@ -1,5 +1,27 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n avatar_tags%}
+{% load static %}
+
+
+
+{% block extra_head %}
+    <script type="text/javascript">
+        window.onload = function () {
+            var navbar = document.querySelector('.navbar-right');
+
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            var img = document.createElement('img');
+            img.src = '{% static "icons/home.svg" %}';
+            img.style = 'width:25px; height:25px;'
+            a.appendChild(img);
+            a.href = '{{ SCANAGROEMPRESA_URL }}';
+            li.appendChild(a);
+            navbar.prepend(li);
+        }
+
+    </script>
+{% endblock extra_head %}
 
 {% block tabs %}
     {% with user.get_group_permissions as group_perms %}
