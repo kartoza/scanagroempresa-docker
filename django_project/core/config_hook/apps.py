@@ -28,7 +28,11 @@ class CoreAppConfig(AppConfig):
         settings.INSTALLED_APPS = installed_apps
 
         # Install custom permissions
-        initialize_permissions()
+        try:
+            initialize_permissions()
+        except:
+            # Above statement can fail if it is the first migrate
+            pass
 
         # Init admin overrides
         from core.config_hook import admin  # noqa
