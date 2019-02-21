@@ -36,3 +36,4 @@ class CoreAppConfig(AppConfig):
 
         # Init admin overrides
         from core.config_hook import admin  # noqa
+        from core.config_hook import signals  # noqa
