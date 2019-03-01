@@ -67,7 +67,8 @@
                     <li><a href="{% url "maps_browse" %}?limit={{ CLIENT_RESULTS_LIMIT }}">{% trans "Explore Maps" %}</a></li>
                 {% endif %}
                 {% if 'core.view__maps__create_map__submenu' in group_perms %}
-                    <li> <a href="{% url "new_map" %}">{% trans "Create Map" %}</a></li>
+                    <li> <a href="{{ SCANAGROEMPRESA_URL }}#!/maps/create">{% trans "Create Map" %}</a></li>
+                    <!-- "{% url "new_map" %}" -->
                 {% endif %}
                 </ul>
             {% else %}
