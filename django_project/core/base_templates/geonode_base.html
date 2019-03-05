@@ -114,3 +114,65 @@
         {% endif %}
     {% endwith %}
 {% endblock tabs %}
+
+{% block footer %}
+ <footer>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-md-offset-6 text-right">
+          {% block contactus %}
+          {% if custom_theme.contactus %}
+          <ul class="list-unstyled">
+              <li style="text-align: left;"><h2 style="margin-top: 0px;">Contact Us </h2> </li>
+              {% if custom_theme.contact_name %}<li style="text-align: left;">{{ custom_theme.contact_name }}</li>{% endif %}
+              {% if custom_theme.contact_position %}<li style="text-align: left;">{{ custom_theme.contact_position }}</li>{% endif %}
+              {% if custom_theme.contact_administrative_area %}<li style="text-align: left;">{{ custom_theme.contact_administrative_area }}</li>{% endif %}
+              {% if custom_theme.contact_city %}<li style="text-align: left;">{{ custom_theme.contact_city }}</li>{% endif %}
+              {% if custom_theme.contact_street %}<li style="text-align: left;">{{ custom_theme.contact_street }}</li>{% endif %}
+              {% if custom_theme.contact_postal_code %}<li style="text-align: left;">{{ custom_theme.contact_postal_code }}</li>{% endif %}
+              {% if custom_theme.contact_country %}<li style="text-align: left;">{{ custom_theme.contact_country }}</li>{% endif %}
+              {% if custom_theme.contact_delivery_point %}<li style="text-align: left;">{{ custom_theme.contact_delivery_point }}</li>{% endif %}
+              {% if custom_theme.contact_voice %}<li style="text-align: left;">Tel: {{ custom_theme.contact_voice }}</li>{% endif %}
+              {% if custom_theme.contact_facsimile %}<li style="text-align: left;">Fax: {{ custom_theme.contact_facsimile }}</li>{% endif %}
+              {% if custom_theme.contact_email %}<li style="text-align: left;">E-mail: {{ custom_theme.contact_email }}</li>{% endif %}
+          </ul>
+          {% endif %}
+          {% endblock contactus %}
+ <!--          <ul class="list-unstyled">
+            <li>{% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> <em>{% trans "version" %} {{ VERSION }}</em></li>
+            <li><a href="{% url "developer" %}">{% trans "Developers" %}</a> | <a href="{% url "about" %}">{% trans "About" %}</a><li>
+          </ul> -->
+          <label class="hidden">{% trans "Language" %}</label>
+          {% if csrf_token != "NOTPROVIDED" %}
+          {% get_current_language as LANGUAGE %}
+          <form class="form-inline" action="/i18n/setlang/" method="post">
+          {% csrf_token %}
+            <select class="col-md-6 pull-right" name="language" onchange="javascript:form.submit()">
+              {% for lang in LANGUAGES %}
+              <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
+                {{ lang.1 }}
+              </option>
+              {% endfor %}
+            </select>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% if custom_theme.copyright %}
+    <section class="footer-copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 copyright ">
+            <div class="module">
+              <small>{{ custom_theme.copyright }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock footer %}
