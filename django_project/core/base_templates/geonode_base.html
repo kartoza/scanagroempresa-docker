@@ -4,6 +4,7 @@
 
 
 
+
 {% block extra_head %}
     <script type="text/javascript">
         window.onload = function () {
@@ -22,6 +23,18 @@
 
     </script>
 {% endblock extra_head %}
+
+{% block header %}
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <i class="fa fa-navicon fa-lg"></i>
+        </button>
+        <a class="navbar-brand" href="{% url "home" %}">GeoNode</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav toolbar">
 
 {% block tabs %}
     {% with user.get_group_permissions as group_perms %}
@@ -113,4 +126,156 @@
             </li>
         {% endif %}
     {% endwith %}
-{% endblock tabs %}
+
+
+          {% block extra_tab %}
+
+          {% endblock %}
+
+          {% endblock %}
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+
+
+            <li>
+              <div class="search">
+                <form id="search" action="{% url "search" %}" >
+                  <span class="fa fa-search"></span>
+                  {% if HAYSTACK_SEARCH %}
+                  <input id="search_input" type="text" placeholder="Search" name="q">
+                  {% else %}
+                  <input id="search_input" type="text" placeholder="Search" name="title__icontains">
+                  {% endif %}
+                </form>
+              </div>
+          </li>
+<!--             {% if not user.is_authenticated and ACCOUNT_OPEN_SIGNUP %}
+            <li><a href="{% url "account_signup" %}">{% trans "Register" %}</a></li>
+            {% endif %} -->
+            {% if user.is_authenticated %}
+            <li>
+              <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {% autoescape off %}{% avatar user 42 %}{% endautoescape %}
+                {% with full_name=user.first_name|add:' '|add:user.last_name %}
+                  {% if full_name.strip %}
+                    {{ full_name | truncatechars:20 }}
+                  {% else %}
+                    {{ user.username | truncatechars:20 }}
+                  {% endif %}
+                {% endwith %}
+                <i class="fa fa-angle-down fa-lg"></i>
+              </a>
+              <ul class="dropdown-menu">
+                {% with user.get_group_permissions as group_perms %}
+                {% if 'core.view__profile__profile__submenu' in group_perms %}
+                    <li><a href="{{ user.get_absolute_url }}">{% trans "Profile" %}</a></li>
+                {% endif %}
+                {% if 'core.view__profile__recent_activity__submenu' in group_perms %}
+                    <li><a href="{% url "recent-activity" %}">{% trans "Recent Activity" %}</a></li>
+                {% endif %}
+                {% if 'core.view__profile__inbox__submenu' in group_perms %}
+                    <li><a href="{% url "messages_inbox" %}">{% trans "Inbox" %}</a></li>
+                {% endif %}
+                {% if user.is_superuser or user.is_staff %}
+                    <li role="separator" class="divider"></li>
+                    {% if 'core.view__profile__admin__submenu' in group_perms %}
+                        <li><a href="{% url "admin:index" %}">{% trans "Admin" %}</a></li>
+                    {% endif %}
+                    {% if 'geonode.geoserver' in INSTALLED_APPS %}
+                        {% if 'core.view__profile__geoserver__submenu' in group_perms %}
+                            <li><a href="{{ OGC_SERVER.default.WEB_UI_LOCATION }}">GeoServer</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% if USE_MONITORING %}
+                    <li role="separator" class="divider"></li>
+                    {% if 'core.view__profile__monitoring__submenu' in group_perms %}
+                        <li><a href="{% url "monitoring:index" %}">{% trans "Monitoring" %}
+                        </a></li>
+                    {% endif %}
+                    {% endif %}
+                {% endif %}
+                <li role="separator" class="divider"></li>
+                
+                {% if 'core.view__profile__help__submenu' in group_perms %}
+                    <li><a href="{% url "help" %}">{% trans "Help" %}</a></li>
+                {% endif %}
+                <li role="separator" class="divider"></li>
+                <li><a href="{{SITEURL}}/account/logout/">{% trans "Log out" %}</a></li>
+                {% endwith %}
+                </ul>
+              </li>
+          <!-- {% else %}
+          <li><a href="#" data-toggle="modal" data-target="#SigninModal" role="button" >{% trans "Sign in" %} </a></li>
+              {% endif %} -->
+            </ul>
+          </div> <!--/.nav-collapse -->
+        </div>
+      </nav>
+      {% endblock header %}
+
+
+
+
+{% block footer %}
+ <footer>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6 col-md-offset-6 text-right">
+          {% block contactus %}
+          {% if custom_theme.contactus %}
+          <ul class="list-unstyled">
+              <li style="text-align: left;"><h2 style="margin-top: 0px;">Contact Us </h2> </li>
+              {% if custom_theme.contact_name %}<li style="text-align: left;">{{ custom_theme.contact_name }}</li>{% endif %}
+              {% if custom_theme.contact_position %}<li style="text-align: left;">{{ custom_theme.contact_position }}</li>{% endif %}
+              {% if custom_theme.contact_administrative_area %}<li style="text-align: left;">{{ custom_theme.contact_administrative_area }}</li>{% endif %}
+              {% if custom_theme.contact_city %}<li style="text-align: left;">{{ custom_theme.contact_city }}</li>{% endif %}
+              {% if custom_theme.contact_street %}<li style="text-align: left;">{{ custom_theme.contact_street }}</li>{% endif %}
+              {% if custom_theme.contact_postal_code %}<li style="text-align: left;">{{ custom_theme.contact_postal_code }}</li>{% endif %}
+              {% if custom_theme.contact_country %}<li style="text-align: left;">{{ custom_theme.contact_country }}</li>{% endif %}
+              {% if custom_theme.contact_delivery_point %}<li style="text-align: left;">{{ custom_theme.contact_delivery_point }}</li>{% endif %}
+              {% if custom_theme.contact_voice %}<li style="text-align: left;">Tel: {{ custom_theme.contact_voice }}</li>{% endif %}
+              {% if custom_theme.contact_facsimile %}<li style="text-align: left;">Fax: {{ custom_theme.contact_facsimile }}</li>{% endif %}
+              {% if custom_theme.contact_email %}<li style="text-align: left;">E-mail: {{ custom_theme.contact_email }}</li>{% endif %}
+          </ul>
+          {% endif %}
+          {% endblock contactus %}
+ <!--          <ul class="list-unstyled">
+            <li>{% trans "Powered by" %} <a href="http://geonode.org">{% trans "GeoNode" %}</a> <em>{% trans "version" %} {{ VERSION }}</em></li>
+            <li><a href="{% url "developer" %}">{% trans "Developers" %}</a> | <a href="{% url "about" %}">{% trans "About" %}</a><li>
+          </ul> -->
+          <a class="copyright-logo" href="/" target="_self"></a>
+          <label class="hidden">{% trans "Language" %}</label>
+          {% if csrf_token != "NOTPROVIDED" %}
+          {% get_current_language as LANGUAGE %}
+          <form class="form-inline" action="/i18n/setlang/" method="post">
+          {% csrf_token %}
+            <select class="col-md-6 pull-right" name="language" onchange="javascript:form.submit()">
+              {% for lang in LANGUAGES %}
+              <option value="{{ lang.0 }}" {% ifequal LANGUAGE_CODE lang.0 %} selected="selected"{% endifequal %}>
+                {{ lang.1 }}
+              </option>
+              {% endfor %}
+            </select>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  {% if custom_theme.copyright %}
+    <section class="footer-copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 copyright ">
+            <div class="module">
+              <small>{{ custom_theme.copyright }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock footer %}
