@@ -28,8 +28,8 @@
                 <p>{% trans "As for the layers and maps GeoNode allows to publish tabular and text data, manage theirs metadata and associated documents." %}</p>
               </div>
               <div class="col-md-6">
-                <p><a href="{% url "profile_browse" %}"><i class="fa fa-user fa-4x"></i></a></p>
-                <h2><a href="{% url "profile_browse" %}">{{ facets.user|default:_("No") }} {% blocktrans count counter=facets.user %}User{% plural %}Users{% endblocktrans %}</a></h2>
+                <p><i class="fa fa-user fa-4x"></i></p>
+                <h2>{{ facets.user|default:_("No") }} {% blocktrans count counter=facets.user %}User{% plural %}Users{% endblocktrans %}</h2>
                 <p>{% trans "Geonode allows registered users to easily upload geospatial data and various documents in several formats." %}</p>
               </div>
             {% endwith %}
