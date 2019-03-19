@@ -184,7 +184,7 @@
                     {% endif %}
                     {% if 'geonode.geoserver' in INSTALLED_APPS %}
                         {% if 'core.view__profile__geoserver__submenu' in group_perms %}
-                            <li><a href="{{ OGC_SERVER.default.WEB_UI_LOCATION }}">GeoServer</a></li>
+                            <li><a href="{{ GEOSERVER_PUBLIC_LOCATION }}">GeoServer</a></li>
                         {% endif %}
                     {% endif %}
                     {% if USE_MONITORING %}

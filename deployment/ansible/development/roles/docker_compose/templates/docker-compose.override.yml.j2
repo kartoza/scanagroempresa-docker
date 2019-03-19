@@ -116,7 +116,7 @@ services:
 
       {% if scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP is defined and scanagroempresa.environment.USE_SCANAGROEMPRESA_THEME_APP %}
 
-      - '../submodules/scanagroempresa_custom_theme:{{ scanagroempresa.environment.SCANAGROEMPRESA_THEME_APP_PATH }}'
+      - ../submodules/{{ scanagroempresa.environment.SCANAGROEMPRESA_THEME_APP_NAME }}:{{ scanagroempresa.environment.SCANAGROEMPRESA_THEME_APP_PATH }}
 
       {% endif %}
 
