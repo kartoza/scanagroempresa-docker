@@ -68,6 +68,15 @@ web:
 up: web
 	# Synonymous with web
 
+worker-start:
+	@docker-compose up -d worker
+
+worker-stop:
+	@docker-compose stop worker
+
+worker-logs:
+	@docker-compose logs -f --tail=30 worker
+
 permissions:
 	# Probably we want something more granular here....
 	# Your sudo password will be needed to set the file permissions

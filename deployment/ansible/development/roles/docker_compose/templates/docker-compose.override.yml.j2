@@ -89,6 +89,43 @@ services:
       # for karma tests
       - "{{ docker_port_forward.django.karma_tests }}:9876"
 
+  worker:
+    build:
+      context: docker-geonode
+      dockerfile: Dockerfile-dev
+    environment:
+
+      {% for key, value in django.environment.iteritems() %}
+
+      - {{ key }}={{ value }}
+
+      {% endfor %}
+
+      {% for key, value in geonode.environment.iteritems() %}
+
+      - {{ key }}={{ value }}
+
+      {% endfor %}
+
+    volumes:
+      - {{ django.app_location }}:/home/web/django_project
+
+      {% for value in django.volumes %}
+
+      - {{ value }}
+
+      {% endfor %}
+
+      {% if geonode.environment.USE_GEONODE_THEME_APP is defined and geonode.environment.USE_GEONODE_THEME_APP %}
+
+      - ../submodules/geonode_custom_theme:{{ geonode.environment.GEONODE_THEME_APP_PATH }}
+
+      {% endif %}
+
+      - ./static:/home/web/static:rw
+      - ./media:/home/web/media:rw
+      - ./logs:/var/log/
+
   web:
     volumes:
       - ./sites-enabled:/etc/nginx/conf.d:ro

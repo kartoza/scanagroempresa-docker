@@ -105,6 +105,44 @@ INSTALLED_APPS += (
     'core.kobo'
 )
 
+# Celery settings
+CELERY_BROKER_URL = os.environ.get('BROKER_URL', BROKER_URL)
+
+CELERY_RESULT_PERSISTENT = False
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+
+if DEBUG:
+    # Default settings for Debug mode is always eager
+    _CELERY_TASK_ALWAYS_EAGER = 'True'
+else:
+    # Default settings for prod mode is to use worker
+    _CELERY_TASK_ALWAYS_EAGER = 'False'
+
+# But still, allow overrides from environment variables
+CELERY_TASK_ALWAYS_EAGER = strtobool(
+        os.environ.get('CELERY_TASK_ALWAYS_EAGER', _CELERY_TASK_ALWAYS_EAGER))
+CELERY_TASK_ACKS_LATE = True
+CELERY_TASK_IGNORE_RESULT = False
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_WORKER_SEND_TASK_EVENTS = True
+# Use this settings to limit concurrency (for Debugging)
+if DEBUG:
+    CELERY_WORKER_CONCURRENCY = 1
+    CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+CELERY_WORKER_POOL_RESTARTS = True
+
+ASYNC_SIGNALS_GEONODE = ast.literal_eval(os.environ.get(
+        'ASYNC_SIGNALS_GEONODE', 'False'))
+
+if ASYNC_SIGNALS_GEONODE and USE_GEOSERVER:
+    from .geonode_queue_settings import *  # noqa
+    CELERY_TASK_QUEUES += GEONODE_QUEUES
+
+# Celery log
+if DEBUG:
+    LOGGING['loggers']['celery']['level'] = 'DEBUG'
+
 # Email settings
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '25'))
@@ -135,6 +173,8 @@ GEOSERVER_PUBLIC_LOCATION = validate_url(
 OGC_SERVER['default']['LOCATION'] = GEOSERVER_LOCATION
 OGC_SERVER['default']['PUBLIC_LOCATION'] = GEOSERVER_PUBLIC_LOCATION
 OGC_SERVER['default']['DATASTORE'] = os.environ.get('DEFAULT_BACKEND_DATASTORE', '')
+OGC_SERVER['default']['TIMEOUT'] = int(os.environ.get(
+    'OGC_SERVER_TIMEOUT', '3600'))
 
 # Custom theme settings
 USE_GEONODE_THEME_APP = ast.literal_eval(

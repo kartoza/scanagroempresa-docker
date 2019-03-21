@@ -60,7 +60,6 @@ services:
   uwsgi:
     build:
       context: docker-geonode
-    hostname: uwsgi
     working_dir: /usr/src/app
     entrypoint: []
     environment:
@@ -68,15 +67,9 @@ services:
       - DATABASE_USERNAME=docker
       - DATABASE_PASSWORD=docker
       - DATABASE_HOST=db
-      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-      - VIRTUAL_HOST=bims.kartoza.com
-      - VIRTUAL_PORT=8080
-      - RABBITMQ_HOST=rabbitmq
-      - HAYSTACK_HOST=elasticsearch
-      - GEOCONTEXT_URL=https://geocontext.kartoza.com
-      - GEOCONTEXT_COLLECTION_KEY=climate
-      - CONTACT_US_EMAIL=dimas@kartoza.com
-      - APP_NAME=bims
+      - DJANGO_SETTINGS_MODULE=core.settings.overrides
+      - ASYNC_SIGNALS_GEONODE=True
+      - USE_GEOSERVER=True
     links:
       - smtp:smtp
       - db:db
@@ -91,25 +84,17 @@ services:
   worker:
     build:
       context: docker-geonode
-    hostname: worker
     working_dir: /home/web/django_project
-    command: celery worker --app=bims.celery:app -B -l debug
+    command: celery -A core worker -Q celery,default,geonode,cleanup,update,email -B -l debug -n geonode.%h
     entrypoint: []
     environment:
       - DATABASE_NAME=gis
       - DATABASE_USERNAME=docker
       - DATABASE_PASSWORD=docker
       - DATABASE_HOST=db
-      - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
-      - VIRTUAL_HOST=bims.kartoza.com
-      - VIRTUAL_PORT=8080
-      - RABBITMQ_HOST=rabbitmq
-      - HAYSTACK_HOST=elasticsearch
-      - GEOCONTEXT_URL=https://geocontext.kartoza.com
-      - GEOCONTEXT_COLLECTION_KEY=climate
-      - CONTACT_US_EMAIL=dimas@kartoza.com
-      - APP_NAME=bims
+      - DJANGO_SETTINGS_MODULE=core.settings.overrides
       - ASYNC_SIGNALS_GEONODE=True
+      - USE_GEOSERVER=True
     links:
       - smtp:smtp
       - db:db
@@ -117,11 +102,6 @@ services:
       - geoserver:geoserver
       - rabbitmq:rabbitmq
       - cache:cache
-    volumes:
-      - ../../django-bims:/home/web/django_project
-      - ./static:/home/web/static:rw
-      - ./media:/home/web/media:rw
-      - ./logs:/var/log/
     restart: unless-stopped
     user: root
 
@@ -153,14 +133,7 @@ services:
     restart: unless-stopped
 
   rabbitmq:
-    image: library/rabbitmq:3.6
-    hostname: rabbitmq
-    environment:
-      - RABBIT_PASSWORD=rabbit_test_password
-      - USER=rabbit_user
-      - RABBITMQ_NODENAME=rabbit
-    volumes:
-      - ./rabbitmq-data:/var/lib/rabbitmq/
+    image: rabbitmq:3.6
     restart: unless-stopped
 
   cache:
