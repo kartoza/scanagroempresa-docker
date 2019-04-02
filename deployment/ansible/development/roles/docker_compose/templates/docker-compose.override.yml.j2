@@ -126,13 +126,22 @@ services:
       - ./media:/home/web/media:rw
       - ./logs:/var/log/
 
-  web:
+  geonode_nginx:
     volumes:
-      - ./sites-enabled:/etc/nginx/conf.d:ro
       # I dont use volumes_from as I want to use the ro modifier
       - ./static:/home/web/static:ro
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
+
+      {% if geonode_nginx is defined and geonode_nginx.volumes is defined %}
+
+      {% for value in geonode_nginx.volumes %}
+
+      - {{ value }}
+
+      {% endfor %}
+
+      {% endif %}
 
   scanagroempresa:
 
@@ -171,8 +180,10 @@ services:
       - "{{ docker_port_forward.scanagroempresa.ssh }}:22"
       - "{{ docker_port_forward.scanagroempresa.http }}:8000"
 
+  {% if docker_port_forward.web is defined %}
 
+  web:
+    ports:
+      - "{{ docker_port_forward.web.http }}:80"
 
-
-
-
+  {% endif %}

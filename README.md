@@ -8,6 +8,7 @@ What this stack includes:
 
 - GeoNode stack as Scanagroempresa backend
 - Scanagroempresa stack
+- Transfer.sh stack (as big file uploader service)
 
 # Development Setup
 
@@ -30,6 +31,10 @@ Update submodules by typing these 4 commands:
 Notice there is a new folder called submodules.
 
 To use this repo locally as development environment, refer to [Ansible Guide](deployment/ansible/README.md).
+The guide contains information on how the orchestration for local infrastructure works.
+It contains a general idea of what is going on behind the scene to quickly setup the entire stack.
+
+For more specific guide about customizing the setup, refer to [Advanced Setup Customization](deployment/README-deployment.md)
 
 Note that we heavily used PyCharm to setup development environment (to Run Django, etc.)
 
@@ -91,7 +96,7 @@ python manage.py runserver 0.0.0.0:8080
 
 If you are using the default configuration, GeoNode will be available at:
 ```
-http://<site domain name>:63302/geonode
+http://<site domain name>:63302/administration
 ```
 
 With `site domain name` refer to a site domain name or ipaddress you set up at `all.yml` file.

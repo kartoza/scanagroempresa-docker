@@ -113,6 +113,7 @@ scanagroempresa:
     REDIS_DEFAULT_DB: 1
     REDIS_SESSION_DB: 2
     # Skin App Settings
+    # Set to true if you use a skin app
     USE_SCANAGROEMPRESA_THEME_APP: False
     SCANAGROEMPRESA_THEME_APP_PATH: /home/web/scanagroempresa_custom_theme
     SCANAGROEMPRESA_THEME_APP_NAME: scanagroempresa_custom_theme
@@ -152,13 +153,11 @@ geoserver:
     # The public url of GeoNode API to allow GeoServer to connect to it
     NGINX_BASE_URL: http://scanagroempresa-docker.test:63302/
 
+geonode_nginx:
+  volumes:
+    - ./sites-enabled/geoserver/django.conf:/etc/nginx/conf.d/default.conf
+
 interpreters:
-  inasafe_django:
-    name: 'scanagroempresa-docker Container'
-    domain_alias: 'scanagroempresa-docker.test'
-    ssh_port: 63303
-    pycharm_helpers: /home/web/django_project/.pycharm_helpers
-    ipaddress: scanagroempresa-docker.test
 
 docker_port_forward:
   django:
@@ -171,3 +170,5 @@ docker_port_forward:
   scanagroempresa:
     ssh: 63404
     http: 63306
+  web:
+    http: 80
