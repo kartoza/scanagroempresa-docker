@@ -102,7 +102,8 @@ DEBUG = strtobool(os.environ.get('DEBUG', 'False'))
 INSTALLED_APPS += (
     'core.config_hook',
     'core.custom_rest_api',
-    'core.kobo'
+    'core.kobo',
+    'core.transfer',
 )
 
 # Celery settings
@@ -139,8 +140,18 @@ if ASYNC_SIGNALS_GEONODE and USE_GEOSERVER:
     from .geonode_queue_settings import *  # noqa
     CELERY_TASK_QUEUES += GEONODE_QUEUES
 
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'clean-import-job-daily': {
+        'task': 'core.transfer.tasks.clean_import_job',
+        'schedule': crontab(hour=0, minute=0),
+    }
+}
+
 # Celery log
 if DEBUG:
+    LOGGING['disable_existing_loggers'] = False
     LOGGING['loggers']['celery']['level'] = 'DEBUG'
 
 # Email settings
