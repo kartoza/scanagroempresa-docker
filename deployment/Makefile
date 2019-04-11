@@ -148,6 +148,9 @@ reload:
 	# no -it flag so we can run over remote shell
 	@docker-compose exec uwsgi uwsgi --reload  /tmp/django.pid
 
+geonode-updatelayers:
+	@docker-compose exec uwsgi python manage.py updatelayers -i -s kobo_form_data
+
 rebuildindex:
 	@echo
 	@echo "------------------------------------------------------------------"
