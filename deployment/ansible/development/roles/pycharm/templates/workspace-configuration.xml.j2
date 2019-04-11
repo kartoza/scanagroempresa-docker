@@ -351,6 +351,24 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
+    <configuration default="false" name="Scanagroempresa runSync" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+          {% include 'scanagroempresa-environment.xml.j2' %}
+      </envs>
+      <option name="SDK_HOME" value="ssh://root@localhost:{{ docker_port_forward.scanagroempresa.ssh }}/usr/local/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/submodules/scanagroempresa/kobo_sync_service" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="false" />
+      <module name="{{ project_name }}" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="runSync.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
     <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Django server.{{ project_name }}" />
       <item index="1" class="java.lang.String" itemvalue="Django server.{{ project_name }}.scanagroempresa" />
