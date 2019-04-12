@@ -18,6 +18,18 @@ ADD REQUIREMENTS.txt REQUIREMENTS.txt
 
 RUN pip install -r REQUIREMENTS.txt
 
+# install anaconda so we can use conda installer package manager
+RUN wget https://repo.anaconda.com/archive/Anaconda2-2019.03-Linux-x86_64.sh -O ~/anaconda.sh
+RUN bash ~/anaconda.sh -b -p $HOME/anaconda
+# set env so we could always access anaconda
+RUN echo "PATH=$PATH:$HOME/anaconda/bin" >> ~/.bashrc
+# set env so we could install orca
+ENV PATH="$PATH:$HOME/anaconda/bin"
+
+RUN conda install -y -c plotly plotly-orca
+# orca depends on the following packages
+RUN apt-get -y install xvfb libxtst6 libgconf-2-4 libnss3-dev libasound2
+
 RUN apt update; apt install -y postgresql-client
 
 ADD entrypoint.sh /entrypoint.sh

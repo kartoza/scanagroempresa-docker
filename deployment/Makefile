@@ -444,6 +444,9 @@ django-test:
 coverage-django-test:
 	@docker-compose exec uwsgi coverage run -p --branch --source='.' manage.py test --noinput ${CMD_ARGS} bims
 
+reporting-test:
+	@docker-compose exec scanagroempresa python manage.py test scanterra.reporting
+
 update-taxa:
 	@echo
 	@echo "--------------------------"
