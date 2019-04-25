@@ -61,3 +61,6 @@ djangorestframework-gis==0.13
 
 # for extended geonode custom theme
 git+https://github.com/kartoza/geonode_custom_theme.git@develop#egg=geonode_custom_theme
+
+# for core modules
+pyinotify==0.9.6

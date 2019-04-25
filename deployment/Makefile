@@ -68,6 +68,15 @@ web:
 up: web
 	# Synonymous with web
 
+worker-start:
+	@docker-compose up -d worker
+
+worker-stop:
+	@docker-compose stop worker
+
+worker-logs:
+	@docker-compose logs -f --tail=30 worker
+
 permissions:
 	# Probably we want something more granular here....
 	# Your sudo password will be needed to set the file permissions
@@ -138,6 +147,9 @@ reload:
 	@echo "------------------------------------------------------------------"
 	# no -it flag so we can run over remote shell
 	@docker-compose exec uwsgi uwsgi --reload  /tmp/django.pid
+
+geonode-updatelayers:
+	@docker-compose exec uwsgi python manage.py updatelayers -i -s kobo_form_data
 
 rebuildindex:
 	@echo
@@ -431,6 +443,9 @@ django-test:
 
 coverage-django-test:
 	@docker-compose exec uwsgi coverage run -p --branch --source='.' manage.py test --noinput ${CMD_ARGS} bims
+
+reporting-test:
+	@docker-compose exec scanagroempresa python manage.py test scanterra.reporting
 
 update-taxa:
 	@echo

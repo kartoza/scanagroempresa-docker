@@ -21,6 +21,8 @@ FROM geosolutionsit/geonode-generic:1.0
 
 COPY --from=intermediate /usr/src/scanagroempresa-docker/django_project/ /usr/src/scanagroempresa-docker/
 
+RUN pip install -r /usr/src/scanagroempresa-docker/requirements.txt
+
 ADD install-theme-app.sh /install-theme-app.sh
 
 ADD entrypoint.sh /entrypoint.sh

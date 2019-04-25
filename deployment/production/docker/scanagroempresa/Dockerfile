@@ -1,4 +1,4 @@
-# Create intermediate image because it will
+# Create intermediate image
 FROM python:3.7.0-stretch as intermediate
 
 RUN mkdir -p /root/.ssh
@@ -22,7 +22,22 @@ RUN rm -f /usr/src/scanagroempresa/django_app/uwsgi.ini
 
 FROM python:3.7.0-stretch
 
-#RUN mkdir -p /home/web/extra_app
+# Install orca via npm
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+# orca depends on the following packages
+RUN apt update -y; apt install -y nodejs xvfb libxtst6 libgconf-2-4 libnss3-dev libasound2
+RUN npm install -g --unsafe-perm=true electron@1.8.4 orca@1.2.1
+
+# use xvfb to run orca
+RUN rm /usr/bin/orca
+ADD orca.sh /usr/bin/orca
+
+# Install gdal
+RUN apt update -y; apt install -y gdal-bin python3-gdal libgdal-dev
+# no python gdal==2.1.2 so we install 2.1.3
+RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal \
+	&& export C_INCLUDE_PATH=/usr/include/gdal \
+	&& pip install gdal==2.1.3
 
 COPY --from=intermediate /usr/src/scanagroempresa/django_app/ /home/web/extra_app/
 

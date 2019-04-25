@@ -89,13 +89,59 @@ services:
       # for karma tests
       - "{{ docker_port_forward.django.karma_tests }}:9876"
 
-  web:
+  worker:
+    build:
+      context: docker-geonode
+      dockerfile: Dockerfile-dev
+    environment:
+
+      {% for key, value in django.environment.iteritems() %}
+
+      - {{ key }}={{ value }}
+
+      {% endfor %}
+
+      {% for key, value in geonode.environment.iteritems() %}
+
+      - {{ key }}={{ value }}
+
+      {% endfor %}
+
     volumes:
-      - ./sites-enabled:/etc/nginx/conf.d:ro
+      - {{ django.app_location }}:/home/web/django_project
+
+      {% for value in django.volumes %}
+
+      - {{ value }}
+
+      {% endfor %}
+
+      {% if geonode.environment.USE_GEONODE_THEME_APP is defined and geonode.environment.USE_GEONODE_THEME_APP %}
+
+      - ../submodules/geonode_custom_theme:{{ geonode.environment.GEONODE_THEME_APP_PATH }}
+
+      {% endif %}
+
+      - ./static:/home/web/static:rw
+      - ./media:/home/web/media:rw
+      - ./logs:/var/log/
+
+  geonode_nginx:
+    volumes:
       # I dont use volumes_from as I want to use the ro modifier
       - ./static:/home/web/static:ro
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
+
+      {% if geonode_nginx is defined and geonode_nginx.volumes is defined %}
+
+      {% for value in geonode_nginx.volumes %}
+
+      - {{ value }}
+
+      {% endfor %}
+
+      {% endif %}
 
   scanagroempresa:
 
@@ -134,8 +180,10 @@ services:
       - "{{ docker_port_forward.scanagroempresa.ssh }}:22"
       - "{{ docker_port_forward.scanagroempresa.http }}:8000"
 
+  {% if docker_port_forward.web is defined %}
 
+  web:
+    ports:
+      - "{{ docker_port_forward.web.http }}:80"
 
-
-
-
+  {% endif %}
