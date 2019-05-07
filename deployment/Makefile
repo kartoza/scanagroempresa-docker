@@ -59,11 +59,20 @@ web:
 	@echo "------------------------------------------------------------------"
 	@echo "Running in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose ${ARGS} up -d web
+	@docker-compose ${ARGS} up -d --remove-orphans web
 	@# Dont confuse this with the dbbackup make command below
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
 	@docker-compose ${ARGS} up --no-recreate --no-deps -d dbbackups
+
+npm-init:
+	@cd ../submodules/scanagroempresa/frontend; npm install --save-dev
+
+npm-run-dev:
+	@cd ../submodules/scanagroempresa/frontend; npm run dev
+
+npm-run-build:
+	@cd ../submodules/scanagroempresa/frontend; npm run build
 
 up: web
 	# Synonymous with web
