@@ -26,7 +26,7 @@ class ImportJob(models.Model):
     is_finished = models.BooleanField(
         default=False)
     created = models.DateTimeField(
-        default=timezone.now())
+        default=timezone.now)
     errors = models.TextField(
         blank=True,
         null=True)

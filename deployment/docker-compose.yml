@@ -18,6 +18,7 @@ services:
       - maildomain=kartoza.com
       - smtp_user=noreply:docker
     restart: unless-stopped
+    network_mode: bridge
 
   db:
     image: kartoza/postgis:9.6-2.4
@@ -26,6 +27,7 @@ services:
       - POSTGRES_USER=docker
       - POSTGRES_PASS=docker
     restart: unless-stopped
+    network_mode: bridge
 
   elasticsearch:
     image: elasticsearch:2.4.2
@@ -34,6 +36,7 @@ services:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    network_mode: bridge
 
   data-dir-conf:
     image: geosolutionsit/geoserver_data:2.13.x
@@ -41,21 +44,23 @@ services:
     command: /bin/true
     volumes:
       - geoserver-data-dir:/geoserver_data/data
+    network_mode: bridge
 
   geoserver:
     image: geosolutionsit/geoserver-docker:2.13.x
     restart: unless-stopped
-    depends_on:
+    links:
       - db
-      - data-dir-conf
     volumes:
       - geoserver-data-dir:/geoserver_data/data
+    network_mode: bridge
 
   base_uwsgi:
     build:
       context: docker-geonode
       dockerfile: Dockerfile
     image: base_uwsgi:latest
+    network_mode: bridge
 
   uwsgi:
     build:
@@ -81,6 +86,7 @@ services:
       - ./transfer-data:/home/transfer/data
     restart: unless-stopped
     user: root
+    network_mode: bridge
 
   worker:
     build:
@@ -108,6 +114,7 @@ services:
       - ./transfer-data:/home/transfer/data
     restart: unless-stopped
     user: root
+    network_mode: bridge
 
   dbbackups:
     image: kartoza/pg-backup:9.6
@@ -126,6 +133,7 @@ services:
       - PGHOST=db
       - PGDATABASE=gis
     restart: unless-stopped
+    network_mode: bridge
 
   geonode_nginx:
     image: nginx
@@ -135,21 +143,25 @@ services:
       - uwsgi:django
       - geoserver
     restart: unless-stopped
+    network_mode: bridge
 
   rabbitmq:
     image: rabbitmq:3.6
     restart: unless-stopped
+    network_mode: bridge
 
   cache:
-   image: memcached
-   entrypoint:
-    - memcached
-    - -m 64
+    image: memcached
+    entrypoint:
+      - memcached
+      - -m 64
+    network_mode: bridge
 
   redis:
     image: redis:4.0.11
     volumes:
       - ./redis-data:/data/
+    network_mode: bridge
 
   scanagroempresa:
     image: kartoza/scanagroempresa:dev
@@ -161,8 +173,10 @@ services:
       - ./media:/home/web/media:rw
       - ./logs:/var/log/
     links:
-      - redis:redis
+      - redis
+      - db
     restart: unless-stopped
+    network_mode: bridge
 
   transfer:
     image: kartoza/transfer.sh:rancher
@@ -171,7 +185,7 @@ services:
       - ./transfer-data:/data
     ports:
       - 63307:80
-
+    network_mode: bridge
 
   web:
     image: haproxy:latest
@@ -182,3 +196,4 @@ services:
       - geonode_nginx:geonode
       - scanagroempresa
     restart: unless-stopped
+    network_mode: bridge
