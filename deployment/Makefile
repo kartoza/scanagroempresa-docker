@@ -245,6 +245,9 @@ shell-geoserver:
 shell-nginx:
 	@docker-compose exec web /bin/bash
 
+flake8-scanagroempresa:
+	@docker-compose exec scanagroempresa flake8 .
+
 restart-geoserver:
 	@docker-compose restart geoserver
 

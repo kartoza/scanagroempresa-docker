@@ -47,3 +47,6 @@ core:
     - view__download_xls_layer
     - view__download_shapefile_layer
     - view__download_kml_layer
+
+    ## Reporting
+    - view__admin__reporting__config
