@@ -82,6 +82,8 @@ scanagroempresa:
     GEONODE_SERVER_PUBLIC_HOST: http://scanagroempresa-docker.test:63302
     # Private or public address of GeoNode for SAE API connection
     GEONODE_SERVER_HOST: http://scanagroempresa-docker.test:63302
+    GEONODE_ADMIN_USER: admin
+    GEONODE_ADMIN_PASSWORD: admin
     # Public address of GeoServer for API connections
     GEOSERVER_HOST: http://scanagroempresa-docker.test:63305/geoserver
     # Set it to match GeoServer credentials

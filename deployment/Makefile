@@ -195,7 +195,7 @@ rm-only: kill
 	@echo "------------------------------------------------------------------"
 	@docker-compose rm
 
-logs:
+logs-geonode:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Showing uwsgi logs in production mode"
