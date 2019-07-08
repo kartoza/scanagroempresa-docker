@@ -23,6 +23,8 @@ COPY --from=intermediate /usr/src/scanagroempresa-docker/django_project/ /usr/sr
 
 RUN pip install -r /usr/src/scanagroempresa-docker/requirements.txt
 
+ADD overrides-geonode.sh /overrides-geonode.sh
+
 ADD install-theme-app.sh /install-theme-app.sh
 
 ADD entrypoint.sh /entrypoint.sh

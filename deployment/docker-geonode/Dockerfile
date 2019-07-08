@@ -24,6 +24,7 @@ RUN rpl "env node" "env nodejs" /usr/lib/node_modules/yuglify/bin/yuglify
 WORKDIR /home/web/django_project
 
 ADD uwsgi.conf /uwsgi.conf
+ADD overrides-geonode.sh /overrides-geonode.sh
 
 # Open port 8080 as we will be running our uwsgi socket on that
 EXPOSE 8080
