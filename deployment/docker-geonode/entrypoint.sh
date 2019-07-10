@@ -18,6 +18,9 @@ echo "waitfordbs task done"
 echo "installing custom theme repo"
 sh /install-theme-app.sh
 
+echo "copying overrided code"
+sh /overrides-geonode.sh
+
 echo "running migrations"
 /usr/local/bin/invoke migrations
 echo "migrations task done"
