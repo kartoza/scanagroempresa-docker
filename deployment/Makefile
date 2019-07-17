@@ -251,9 +251,6 @@ flake8-scanagroempresa:
 restart-geoserver:
 	@docker-compose restart geoserver
 
-kobo-geonode-sync:
-	@docker-compose exec scanagroempresa /bin/bash -c "cd /home/web/kobo_sync_service; python runSync.py"
-
 superuser:
 	@echo
 	@echo "------------------------------------------------------------------"
