@@ -41,8 +41,6 @@ RUN export CPLUS_INCLUDE_PATH=/usr/include/gdal \
 
 COPY --from=intermediate /usr/src/scanagroempresa/django_app/ /home/web/extra_app/
 
-COPY --from=intermediate /usr/src/scanagroempresa/kobo_sync_service/ /home/web/kobo_sync_service/
-
 ADD entrypoint.sh /entrypoint.sh
 
 ADD install-theme-app.sh /install-theme-app.sh
@@ -54,8 +52,6 @@ ADD wait-for-kobo-cache-databases.sh /wait-for-kobo-cache-databases.sh
 WORKDIR /home/web/extra_app
 
 RUN pip install -r REQUIREMENTS.txt
-
-RUN pip install -r /home/web/kobo_sync_service/REQUIREMENTS.txt
 
 RUN apt update; apt install -y postgresql-client gettext
 

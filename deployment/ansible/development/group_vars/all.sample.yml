@@ -97,10 +97,8 @@ scanagroempresa:
     # For KOBO
     # To Kobocat
     KOBO_API_URL: http://test.scancollect.scanterra.com
-    KOBO_API_CLIENTID: ''
-    KOBO_API_CLIENTSECRET: ''
-    KOBO_API_USER: ''
-    KOBO_API_PASSWORD: ''
+    KOBO_API_TOKEN: ''
+    KPI_URL: 'http://test.scancollect-form-edit.scanterra.com'
     # These settings after this is for low level database access
     # Since kobotoolbox stack is not managed by this orchestration, fill in
     # the correct credentials and database details that you are going to use.
