@@ -15,7 +15,7 @@ WORKDIR /usr/src
 
 # Copy customized geonode settings
 ARG SCANAGROEMPRESA_DOCKER_TAG=master
-RUN git clone --branch ${SCANAGROEMPRESA_DOCKER_TAG} --depth 1 git@github.com:kartoza/scanagroempresa-docker.git
+RUN git clone --branch ${SCANAGROEMPRESA_DOCKER_TAG} --depth 1 git@github.com:scanterra/scanagroempresa-docker.git
 
 FROM geosolutionsit/geonode-generic:1.0
 
