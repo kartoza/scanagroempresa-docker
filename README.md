@@ -1,6 +1,6 @@
 # Scanagroempresa Docker Builder
 
-This repo is used to build docker image for production server and also to 
+This repo is used to build docker image for production server and also to
 provide docker integration for local development.
 
 
@@ -61,7 +61,9 @@ If the configuration is correct, the server can now be started from pycharm.
 Ansible setup will generate `docker-compose.override.yml` which in turn contains
 services necessary for integration between services.
 
-`make up` command will start docker-compose service stack. Some of the services 
+If you don't use pycharm, you must run `make build`.
+
+`make up` command will start docker-compose service stack. Some of the services
 were available for you to interact with:
 
 1. `uwsgi` service contains GeoNode stack.
@@ -82,7 +84,7 @@ At the end of `make up` command there are two services available for SSH.
 1. `uwsgi` in localhost port 63403
 2. `scanagroempresa` in localhost port 63404
 
-You can always check which ports are open for SSH (inside containers: 22), 
+You can always check which ports are open for SSH (inside containers: 22),
 by running `make status` command. It will lists all running services with open ports.
 
 ## Run GeoNode in Debug Mode manually
@@ -123,9 +125,9 @@ You can develop custom skin theme overrides for Scanagroempresa.
 Since it is possible that there are several skin theme overrides, we didn't include
 any particular skin theme in this repo. Rather you had to checkout the repo yourself.
 
-Let's say you have a Git repository called `my_custom_theme` which 
+Let's say you have a Git repository called `my_custom_theme` which
 contains a django app to override themes. A typical django app may contains directory structure like this:
- 
+
 ```
 - my_custom_theme
   - models.py
@@ -142,7 +144,7 @@ You can clone this repository into `submodules` folder so these orchestration ca
 
 ```
 cd submodules
-git clone git@github.com:lucernae/my_custom_theme.git scanagroempresa_custom_theme 
+git clone git@github.com:lucernae/my_custom_theme.git scanagroempresa_custom_theme
 ```
 
 Above command will clone your `my_custom_theme` repo and put it on a directory called `scanagroempresa_custom_theme`.
